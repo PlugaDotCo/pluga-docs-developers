@@ -11,7 +11,7 @@ Vamos adotar a tática do "crowdsource" e deixar que as empresas que queiram
 conectar suas aplicações web na Pluga possam fazer por elas mesmo.
 
 Desta forma, permitiremos que as empresas parceiras da Pluga conectem as suas
-aplicações web na Pluga, através de uma plataforma de aplicações.
+aplicações através de uma plataforma de aplicações.
 
 ## Primeiro passo
 
@@ -22,8 +22,8 @@ a Pluga.
 A plataforma da Pluga foi criada para rodar módulos de integrações feitos em
 JavaScript (Node.js) com o auxílio de alguns arquivos de configuração em JSON,
 e o Pluga CLI vai te ajudar tanto com todo o esquema de arquivos esperado pela
-plataforma, como também com testes e até mesmo o envio dos seus códigos pra
-Pluga.
+plataforma, como também com testes e até mesmo o envio dos seus códigos para que
+a nossa equipe analise.
 
 Como o próprio CLI também é feito em Node.js, você pode instalar ele a partir
 do `npm` e iniciar seu projeto com o comando `init`.
@@ -35,14 +35,14 @@ $ pluga init my_app
 *Você pode consultar mais informações sobre a instalação e comandos do Pluga CLI
 em [github.com/PlugaDotCo/pluga-cli](https://github.com/PlugaDotCo/pluga-cli).*
 
-Para entender como criar uma integração na Pluga, deve-se pensar que a aplicação
+Para entender como criar uma integração na Pluga, devemos pensar que a aplicação
 será composta por essencialmente **4 componentes**:
 
 1. App, com descrição e autenticação da sua API;
 2. Triggers, com funções onde a Pluga recebe informações da sua API;
-3. Actions, com funcções onde a Pluga envia informações para a sua API;
+3. Actions, com funções onde a Pluga envia informações para a sua API;
 4. Helper Methods, que auxiliam os triggers e actions com dados extra.
 
 Após a criação do seu projeto, você pode iniciar sua configuração de App, onde
 vai definir informações como texto de descrição e autenticação da sua API, tudo
-em [lib/app.json](APP.md).
+em `lib/app.json`.
