@@ -1,4 +1,4 @@
 # Sumário
 
 * [Início](README.md)
-* [App](APP.md)
+* [Configuração do App](APP.md)
