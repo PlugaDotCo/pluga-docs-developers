@@ -54,7 +54,7 @@ valores.
 
 ## Descrição do seu app
 
-#### app\_id
+##### app\_id
 
 Este campo identifica sua aplicação web. Ele deve ser único dentro da Pluga
 (iremos validar se já não existem alguma aplicação com esse app\_id). Usualmente
@@ -63,16 +63,16 @@ espaços ou outros caracteres especiais. Por exemplo, Google Sheets seria
 "google\_sheets", Boleto Simples seria "boleto\_simples", Paypal seria "paypal",
 PagSeguro seria "pag\_seguro", NFe.io seria "nfe\_io", etc.
 
-#### name
+##### name
 
 É o nome da sua aplicação e como ele será exibido. Por exemplo: NFe.io,
 PagSeguro, Pagar.me e Boleto Simples.
 
-#### color
+##### color
 
 Campo referente a cor da sua aplicação na Pluga em hexadecimal.
 
-#### description
+##### description
 
 Campo destinado para que escreva uma breve descrição sobre o que é sua
 aplicação e o que ela faz, entre 20 e 50 palavras. Explique o que torna sua
@@ -83,13 +83,32 @@ vendas, além de construir uma sólida estratégia de Marketing Digital." Observ
 que deve-se preencher todas as opções de linguagem para que a aplicação web seja
 exibida corretamente nas diferentes opções de linguagens.
 
-#### website
+##### website
 
 URL para a home da aplicação. Por exemplo, `https://asana.com`.
 
-#### signup\_url
+##### signup\_url
 
 URL para a página de cadastro da aplicação. Por exemplo,
 `https://asana.com/#signup`.
 
 ## Autenticação
+
+Até o momento existem 5 formas de configurar a autenticação de uma aplicação na
+Pluga: oauth\_2, basic\_auth, pass\_through\_header,
+pass\_through\_query\_string e no\_auth (quando não há autenticação). Vamos
+falar sobre cada tipo de autenticação e seus respectivos parâmetros.
+
+### OAuth 2 (oauth\_2)
+
+### Basic Auth (basic\_auth)
+
+### Pass Through on Header (pass\_through\_header)
+
+### Pass Through on Query String (pass\_through\_query\_string)
+
+### No Authentication (no\_auth)
+
+### Checagem da autenticação
+
+Estas são configurações comuns para todos os tipos de autenticações.
