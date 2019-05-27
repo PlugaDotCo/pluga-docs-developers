@@ -99,15 +99,15 @@ Pluga: oauth\_2, basic\_auth, pass\_through\_header,
 pass\_through\_query\_string e no\_auth (quando não há autenticação). Vamos
 falar sobre cada tipo de autenticação e seus respectivos parâmetros.
 
-### OAuth 2 (oauth\_2)
+### OAuth 2 (`oauth\_2`)
 
-### Basic Auth (basic\_auth)
+### Basic Auth (`basic\_auth`)
 
-### Pass Through on Header (pass\_through\_header)
+### Pass Through on Header (`pass\_through\_header`)
 
-### Pass Through on Query String (pass\_through\_query\_string)
+### Pass Through on Query String (`pass\_through\_query\_string`)
 
-### No Authentication (no\_auth)
+### No Authentication (`no\_auth`)
 
 ### Checagem da autenticação
 
