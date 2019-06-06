@@ -1,4 +1,5 @@
-# Sumário
+# Table of contents
 
 * [Início](README.md)
-* [Configuração do App](APP.md)
+* [Configuração do App](app.md)
+
