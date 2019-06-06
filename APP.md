@@ -61,10 +61,13 @@ espaços ou outros caracteres especiais. Por exemplo, Google Sheets seria
 "google\_sheets", Boleto Simples seria "boleto\_simples", Paypal seria "paypal",
 PagSeguro seria "pag\_seguro", NFe.io seria "nfe\_io", etc.
 
+
 - **name**: É o nome da sua aplicação e como ele será exibido. Por exemplo: NFe.io,
 PagSeguro, Pagar.me e Boleto Simples.
 
+
 - **color**: Campo referente a cor da sua aplicação na Pluga em hexadecimal.
+
 
 - **description**: Campo destinado para que escreva uma breve descrição sobre o que é sua
 aplicação e o que ela faz, entre 20 e 50 palavras. Explique o que torna sua
@@ -75,7 +78,9 @@ vendas, além de construir uma sólida estratégia de Marketing Digital." Observ
 que se deve preencher todas as opções de idioma para que a aplicação seja
 exibida corretamente nos diferentes idiomas.
 
+
 - **website**: URL para a home da aplicação. Por exemplo, `https://asana.com`.
+
 
 - **signup\_url**: URL para a página de cadastro da aplicação. Por exemplo,
 `https://asana.com/#signup`.
