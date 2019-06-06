@@ -2,7 +2,7 @@
 
 O primeiro passo para se criar uma aplicação web dentro da Pluga é incluir os
 dados básicos de descrição (nome, links para o site, URI base da API, descrição
-geral da aplicação, etc) e a forma de autenticação (OAuth2, Basic Auth,
+geral da aplicação, etc) e o método de autenticação (OAuth2, Basic Auth,
 Pass Through Querystring, etc).
 
 E para explicar como fazê-la, nada melhor do que um exemplo real para ilustrar.
@@ -54,11 +54,9 @@ valores.
 
 ## Descrição do seu app
 
-##### app\_id
-
-Este campo identifica sua aplicação web. Ele deve ser único dentro da Pluga
-(iremos validar se já não existem alguma aplicação com esse app\_id). Usualmente
-é o nome da sua aplicação em minúscula incluindo underscore (`_`) quando houver
+- **app\_id**: Este campo identifica sua aplicação web. Ele deve ser único dentro da Pluga
+(iremos validar se já não existe alguma aplicação com esse app\_id). Usualmente
+é o nome da sua aplicação em minúscula, incluindo underscore (`_`) quando houver
 espaços ou outros caracteres especiais. Por exemplo, Google Sheets seria
 "google\_sheets", Boleto Simples seria "boleto\_simples", Paypal seria "paypal",
 PagSeguro seria "pag\_seguro", NFe.io seria "nfe\_io", etc.
@@ -80,8 +78,8 @@ ferramenta única. Não precisa mencionar a Pluga aqui, foque somente em descrev
 o seu negócio e sua proposta de valor. Um bom exemplo é o da RD Station:
 "[...] o software RD Station ajuda sua empresa a gerar mais leads qualificados e
 vendas, além de construir uma sólida estratégia de Marketing Digital." Observe
-que deve-se preencher todas as opções de linguagem para que a aplicação web seja
-exibida corretamente nas diferentes opções de linguagens.
+que se deve preencher todas as opções de idioma para que a aplicação seja
+exibida corretamente nos diferentes idiomas.
 
 ##### website
 
@@ -100,6 +98,37 @@ pass\_through\_query\_string e no\_auth (quando não há autenticação). Vamos
 falar sobre cada tipo de autenticação e seus respectivos parâmetros.
 
 ### OAuth 2 (oauth\_2)
+
+Abaixo temos o exemplo do JSON apenas do campo "authentication" da aplicação
+Google Sheets para ilustrar como deve ser configurado o método de autenticação
+oauth\_2.
+
+```json
+{
+  "authentication": {
+    "type": "oauth_2",
+    "oauth_access_fields": {
+      "client_id": "PLUGA_CLIENT_ID",
+      "client_secret": "PLUGA_CLIENT_SECRET",
+      "authorize_url": "https://accounts.google.com/o/oauth2/v2/auth",
+      "access_token_url": "https://www.googleapis.com/oauth2/v4/token",
+      "refresh_token_url": "https://www.googleapis.com/oauth2/v4/token",
+      "redirect_uri": "https://manage.pluga.co/oauth2/google_contacts",
+      "access_token_placement": "header_bearer",
+      "scope": [
+        "https://www.googleapis.com/auth/contacts"
+      ],
+      "response_type": "code",
+      "access_type": "offline",
+      "prompt": "consent"
+    }
+  }
+}
+```
+
+##### type
+
+##### oauth\_access\_fields
 
 ### Basic Auth (basic\_auth)
 
