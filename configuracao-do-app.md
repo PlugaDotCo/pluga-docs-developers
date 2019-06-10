@@ -4,6 +4,8 @@ O primeiro passo para se criar uma aplicação web dentro da Pluga é incluir os
 
 E para explicar como fazê-la, nada melhor do que um exemplo real para ilustrar. Abaixo temos a configuração da aplicação Asana.
 
+{% code-tabs %}
+{% code-tabs-item title="lib/app.json" %}
 ```javascript
 {
   "app_id": "asana",
@@ -42,6 +44,8 @@ E para explicar como fazê-la, nada melhor do que um exemplo real para ilustrar.
   }
 }
 ```
+{% endcode-tabs-item %}
+{% endcode-tabs %}
 
 A forma de configurá-la é basicamente o preenchimento dos campos de um JSON. Vamos passar campo à campo para entender os seus significados e seus possíveis valores.
 
@@ -66,6 +70,8 @@ Até o momento existem 5 formas de configurar a autenticação de uma aplicaçã
 
 Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação Google Contacts para ilustrar como deve ser configurado o método de autenticação oauth\_2.
 
+{% code-tabs %}
+{% code-tabs-item title="lib/app.json" %}
 ```javascript
 {
   "authentication": {
@@ -87,20 +93,22 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação G
   }
 }
 ```
+{% endcode-tabs-item %}
+{% endcode-tabs %}
 
 * **type**: Tipo da autenticação. Neste caso "oauth\_2", para autenticação do tipo [OAuth 2](https://tools.ietf.org/html/rfc6749). 
-* **oauth\_access\_fields**: Campo que agrupará o conjunto de campos para descrever todos os parâmetros para a autenticação OAuth 2.
-  * **client\_id**: Chave pública de acesso da API que deve ser criada para a Pluga.
-  * **client\_secret**: Chave secreta para acesso da API que deve ser criada para a Pluga \(_essa chave não será divulgada e exposta a nenhum ambiente externo ao dos servidores da Pluga_\).
-  * **authorize\_url**: URL que o usuário será redirecionado.
-  * **access\_token\_url**: URL para recuperar o access token, após o usuário ter autorizado e o código temporário ter sido recuperado.
-  * **refresh\_token\_url**: \[Opcional\] URL para renovar o access token no caso de expiração. Para APIs onde o access token não expira, basta omitir este campo.
-  * **access\_token\_placement**: Campo que indica como o access token deverá ser passado nas chamadas à sua API para autorizar o acesso. Os valores possíveis são:
-    * **header\_bearer**: Para passar o access token no header das requisições como um bearer token no formato `"Authorization: Bearer {{access_token}}".`
-    * **header\_basic**: Para passar o access token no header da requisição como um basic token no formato `"Authorization: Basic {{access_token}}".`
-    * **query\_string**: Para passar o access token como parâmetro da query string  no formato `"access_token={{access_token}}".`
-  * **access\_token\_on\_query\_string\_replacement**: \[Opcional\] Indica o nome do parâmetro que deve ser incluído na query string, só deve ser definido quando `"access_token_placement": "query_string"` e o nome do parâmetro não for `access_token`. Um exemplo dessa situação é a API do Slack, onde o parâmetro da query string é `token`. Neste caso temos na query string o  formato `"token={{access_token}}"`.
-  * **scope**: Lista das permissões necessárias para que a Pluga tenha acesso às informações da conta do usuário na sua aplicação. Recomenda-se que essa lista seja a mais restrita possível.
+* **oauth\_access\_fields**: Campo que agrupará o conjunto de campos para descrever todos os parâmetros para a autenticação OAuth 2. 
+  * **client\_id**: Chave pública de acesso da API que deve ser criada para a Pluga. 
+  * **client\_secret**: Chave secreta para acesso da API que deve ser criada para a Pluga \(_essa chave não será divulgada e exposta a nenhum ambiente externo ao dos servidores da Pluga_\). 
+  * **authorize\_url**: URL que o usuário será redirecionado. 
+  * **access\_token\_url**: URL para recuperar o access token, após o usuário ter autorizado e o código temporário ter sido recuperado. 
+  * **refresh\_token\_url**: \[Opcional\] URL para renovar o access token no caso de expiração. Para APIs onde o access token não expira, basta omitir este campo. 
+  * **access\_token\_placement**: Campo que indica como o access token deverá ser passado nas chamadas à sua API para autorizar o acesso. Os valores possíveis são: 
+    * **header\_bearer**: Para passar o access token no header das requisições como um bearer token no formato `"Authorization: Bearer {{access_token}}"`. 
+    * **header\_basic**: Para passar o access token no header da requisição como um basic token no formato `"Authorization: Basic {{access_token}}"`. 
+    * **query\_string**: Para passar o access token como parâmetro da query string  no formato `"access_token={{access_token}}"`. 
+  * **access\_token\_on\_query\_string\_replacement**: \[Opcional\] Indica o nome do parâmetro que deve ser incluído na query string, só deve ser definido quando `"access_token_placement": "query_string"` e o nome do parâmetro não for `access_token`. Um exemplo dessa situação é a API do Slack, onde o parâmetro da query string é `token`. Neste caso temos na query string o  formato `"token={{access_token}}"`. 
+  * **scope**: Lista das permissões necessárias para que a Pluga tenha acesso às informações da conta do usuário na sua aplicação. Recomenda-se que essa lista seja a mais restrita possível. 
   * **response\_type**: Nome do campo que contém o código temporário que será retornado via query string quando o usuário for redirecionado de volta pra Pluga.
 
 {% hint style="info" %}
@@ -111,6 +119,8 @@ Outros campos de configuração adicionais podem ser definidos, como no caso do 
 
 Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação Zendesk para ilustrar como deve ser configurado o método de autenticação basic\_auth.
 
+{% code-tabs %}
+{% code-tabs-item title="lib/app.json" %}
 ```javascript
 {
   "authentication": {
@@ -144,25 +154,114 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação Z
   }
 }
 ```
+{% endcode-tabs-item %}
+{% endcode-tabs %}
 
-* **type**: Tipo da autenticação. Neste caso "basic\_auth", para autenticação do tipo [HTTP Basic Auth](https://tools.ietf.org/html/rfc7235) passando usuário e senha no header, formato `"Authentication: Basic {{user_and_password_in_base64}}"`.
-* **basic\_auth\_format**: \[Opcional\] Template que será usado para concatenar o username e o password antes de gerar o hash em base 64. Valor padrão `"{username}:{password}"`.
-* **fields**: Lista dos campos que o usuário deverá preencher para realizar a autenticação e quais serão mapeados para os atributos `username` e `password` \(veja exemplo acima\). Cada campo é um objeto que pode conter os seguintes atributos.
-  * **name**: Nome do campo, sempre em minúsculo e espaços substituídos por `_`, por exemplo: "token", "api\_key".
-  * **label**: Nome do campo que será exibido para o usuário.
-  * **mapping**: Este campo indica qual campo se está mapeando. Os valores possíveis são `username` e `password`.
-  * **type**: Este é o tipo do input que será mostrado para o usuário preencher e que também fazem parte da validação. Os valores possíveis são `text`, `password` e `email`.
-  * **validations**: Este atributo armazena a lista de condições para que o campo possa ser validado. Cada condição é um objeto que contém os seguintes atributos:
-    * **name**: Nome da condição desejada, os valores possíveis são:
-      * **min\_length**: Tamanho mínimo de caracteres.
-      * **max\_length**: Tamanho máximo de caracteres.
+* **type**: Tipo da autenticação. Neste caso "basic\_auth", para autenticação do tipo [HTTP Basic Auth](https://tools.ietf.org/html/rfc7235) passando usuário e senha no header, formato `"Authentication: Basic {{user_and_password_in_base64}}"`. 
+* **basic\_auth\_format**: \[Opcional\] Template que será usado para concatenar o username e o password antes de gerar o hash em base 64. Valor padrão `"{username}:{password}"`. 
+* **fields**: Lista dos campos que o usuário deverá preencher para realizar a autenticação e quais serão mapeados para os atributos `username` e `password` \(veja exemplo acima\). Cada campo é um objeto que pode conter os seguintes atributos. 
+  * **name**: Nome do campo, sempre em minúsculo e espaços substituídos por `_`, exemplo: "token", "api\_key". 
+  * **label**: Nome do campo que será exibido para o usuário. 
+  * **mapping**: Indica qual campo se está mapeando. Os valores possíveis são `username` e `password`. 
+  * **type**: Este é o tipo do input que será mostrado para o usuário preencher e que também fazem parte da validação. Os valores possíveis são `text`, `password` e `email`. 
+  * **validations**: Lista de condições para que o campo possa ser validado. Cada condição é um objeto que contém os seguintes atributos: 
+    * **name**: Nome da condição desejada, os valores possíveis são: 
+      * **min\_length**: Tamanho mínimo de caracteres. 
+      * **max\_length**: Tamanho máximo de caracteres. 
     * **value**: Valor da condição. No exemplo ilustrado do primeiro campo do Zendesk, temos a condição `{ "name": "min_length", "value": 3 }`. Ou seja, o campo "subdomain" será validado apenas se o número de caracteres for maior ou igual à 3.
 
 ### Pass Through on Header \(pass\_through\_header\)
 
+Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação Agendor para ilustrar como deve ser configurado o método de autenticação pass\_through\_header.
+
+{% code-tabs %}
+{% code-tabs-item title="lib/app.json" %}
+```javascript
+{
+  "authentication": {
+    "type": "pass_through_header",
+    "fields": [
+      {
+        "name": "token",
+        "label": "Token para usar a API do Agendor",
+        "mapping": "Authorization",
+        "prefix": "Token",
+        "type": "text",
+        "validations": [
+          {
+            "name": "min_length",
+            "value": 10
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+{% endcode-tabs-item %}
+{% endcode-tabs %}
+
+* **type**: Tipo da autenticação. Neste caso "pass\_through\_header", para enviar a chave de autenticação como header das requisições para a sua API, exemplo `"Authentication: Token {{access_token}}"`. 
+* **fields**: Lista dos campos que o usuário deverá preencher para realizar a autenticação via header. Cada campo é um objeto que pode conter os seguintes atributos. 
+  * **name**: Nome do campo, sempre em minúsculo e espaços substituídos por `_`, exemplo: "token", "api\_key". 
+  * **label**: Nome do campo que será exibido para o usuário. 
+  * **mapping**: Indica qual header se está mapeando. 
+  * **prefix**: \[Opcional\] Indica se há algum prefixo antes do valor preenchido pelo usuário no campo. 
+  * **type**: Este é o tipo do input que será mostrado para o usuário preencher e que também fazem parte da validação. Os valores possíveis são `text`, `password` e `email`. 
+  * **validations**: Lista de condições para que o campo possa ser validado. Cada condição é um objeto que contém os seguintes atributos: 
+    * **name**: Nome da condição desejada, os valores possíveis são: 
+      * **min\_length**: Tamanho mínimo de caracteres. 
+      * **max\_length**: Tamanho máximo de caracteres. 
+    * **value**: Valor da condição. No exemplo ilustrado do primeiro campo do Agendor, temos a condição `{ "name": "min_length", "value": 10 }`. Ou seja, o campo "token" será validado apenas se o número de caracteres for maior ou igual à 10.
+
 ### Pass Through on Query String \(pass\_through\_query\_string\)
 
+Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação Magento para ilustrar como deve ser configurado o método de autenticação pass\_through\_query\_string.
+
+{% code-tabs %}
+{% code-tabs-item title="lib/app.json" %}
+```javascript
+{
+  "authentication": {
+    "type": "pass_through_query_string",
+    "fields": [
+      {
+        "name": "site",
+        "label": "Site Completo (https://seusite.com)",
+        "type": "text"
+      },
+      {
+        "name": "api_user",
+        "label": "API Username",
+        "type": "text"
+      },
+      {
+        "name": "api_key",
+        "label": "API Key",
+        "type": "password"
+      }
+    ]
+  }
+}
+```
+{% endcode-tabs-item %}
+{% endcode-tabs %}
+
 ### No Authentication \(no\_auth\)
+
+As vezes não existe necessidade do usuário incluir as chaves de acesso da API da sua aplicação. Nestes casos você deve configurar `"type": "no_auth"`. Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação Paypal para ilustrar como deve ser configurado o método de autenticação no\_auth.
+
+{% code-tabs %}
+{% code-tabs-item title="lib/app.json" %}
+```javascript
+{
+  "authentication": {
+    "type": "no_auth"
+  }
+}
+```
+{% endcode-tabs-item %}
+{% endcode-tabs %}
 
 ### Checagem da autenticação
 
