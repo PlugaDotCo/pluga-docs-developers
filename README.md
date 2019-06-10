@@ -21,7 +21,9 @@ $ npm install -g pluga-cli
 $ pluga init my_app
 ```
 
-_Você pode consultar mais informações sobre a instalação e comandos do Pluga CLI em_ [_github.com/PlugaDotCo/pluga-cli_](https://github.com/PlugaDotCo/pluga-cli)_._
+{% hint style="info" %}
+Você pode consultar mais informações sobre a instalação e comandos do Pluga CLI em [github.com/PlugaDotCo/pluga-cli](https://github.com/PlugaDotCo/pluga-cli).
+{% endhint %}
 
 Para entender como criar uma integração na Pluga, devemos pensar que a aplicação será composta por essencialmente **4 componentes**:
 

@@ -64,7 +64,7 @@ Até o momento existem 5 formas de configurar a autenticação de uma aplicaçã
 
 ### OAuth 2 \(oauth\_2\)
 
-Abaixo temos o exemplo do JSON apenas do campo "authentication" da aplicação Google Contacts para ilustrar como deve ser configurado o método de autenticação oauth\_2.
+Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação Google Contacts para ilustrar como deve ser configurado o método de autenticação oauth\_2.
 
 ```javascript
 {
@@ -103,7 +103,60 @@ Abaixo temos o exemplo do JSON apenas do campo "authentication" da aplicação G
   * **scope**: Lista das permissões necessárias para que a Pluga tenha acesso às informações da conta do usuário na sua aplicação. Recomenda-se que essa lista seja a mais restrita possível.
   * **response\_type**: Nome do campo que contém o código temporário que será retornado via query string quando o usuário for redirecionado de volta pra Pluga.
 
+{% hint style="info" %}
+Outros campos de configuração adicionais podem ser definidos, como no caso do nosso exemplo `approval_prompt` utilizado pelo Google Contacts.
+{% endhint %}
+
 ### Basic Auth \(basic\_auth\)
+
+Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação Zendesk para ilustrar como deve ser configurado o método de autenticação basic\_auth.
+
+```javascript
+{
+  "authentication": {
+    "type": "basic_auth",
+    "basic_auth_format": "{username}/token:{password}",
+    "fields": [
+      {
+        "name": "subdomain",
+        "label": "Subdomínio",
+        "type": "text",
+        "validations": [
+          {
+            "name": "min_length",
+            "value": 3
+          }
+        ]
+      },
+      {
+        "name": "email",
+        "label": "Email",
+        "mapping": "username",
+        "type": "email"
+      },
+      {
+        "name": "token",
+        "label": "Token",
+        "mapping": "password",
+        "type": "text"
+      }
+    ]
+  }
+}
+```
+
+* **type**: Tipo da autenticação. Neste caso "basic\_auth", para autenticação do tipo [HTTP Basic Auth](https://tools.ietf.org/html/rfc7235) passando usuário e senha no header, formato `"Authentication: Basic {{user_and_password_in_base64}}"`.
+* **basic\_auth\_format**: \[Opcional\] Template que será usado para concatenar o username e o password antes de gerar o hash em base 64. Valor padrão `"{username}:{password}"`.
+* **fields**: Lista dos campos que o usuário deverá preencher para realizar a autenticação e quais serão mapeados para os atributos `username` e `password` \(veja exemplo acima\). Cada campo é um objeto que pode conter os seguintes atributos.
+  * **name**: Nome do campo, sempre em minúsculo e espaços substituídos por `_`, por exemplo: "token", "api\_key".
+  * **label**: Nome do campo que será exibido para o usuário.
+  * **mapping**: Este campo indica qual campo se está mapeando. Os valores possíveis são `username` e `password`.
+  * **type**: Este é o tipo do input que será mostrado para o usuário preencher e que também fazem parte da validação. Os valores possíveis são `text`, `password` e `email`.
+  * **validations**: Este atributo armazena a lista de condições para que o campo possa ser validado. Cada condição é um objeto que contém os seguintes atributos:
+    * **name**: Nome da condição desejada, os valores possíveis são:
+      * **min\_length**: Tamanho mínimo de caracteres.
+      * **max\_length**: Tamanho máximo de caracteres.
+    * **value**: Valor da condição. No exemplo ilustrado do primeiro campo do Zendesk, temos a condição `{ "name": "min_length", "value": 3 }`. Ou seja, o campo "subdomain" será validado apenas se o número de caracteres for maior ou igual à 3.
 
 ### Pass Through on Header \(pass\_through\_header\)
 
