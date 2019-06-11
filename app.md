@@ -279,7 +279,35 @@ As vezes não existe necessidade do usuário incluir as chaves de acesso da API 
 {% endcode-tabs-item %}
 {% endcode-tabs %}
 
-### Checagem da autenticação
+## Checagem da autenticação
 
+Para que seja possível verificar se o usuário realmente incluiu chaves de acesso válidas, precisamos fazer alguma requisição \(método GET\) para a sua API, como um ping, e validar se recebemos 200 ou 401/403. Para isso vamos configurar o campo `ping_request`.
+
+{% hint style="info" %}
 Estas são configurações comuns para todos os tipos de autenticações.
+{% endhint %}
+
+{% code-tabs %}
+{% code-tabs-item title="lib/app.json" %}
+```javascript
+{
+  "authentication": {
+    "ping_request": {
+      "method_name": "/invoices",
+      "params": {
+        "limit": 1
+      }
+    }
+    "status": {
+      "field": "ok",
+      "value": true
+    }
+  }
+}
+```
+{% endcode-tabs-item %}
+{% endcode-tabs %}
+
+* **method\_name**: Indica qual path da API deverá ser utilizada na requisição de validação. 
+* **params**: \[Opcional\] Parâmetros que serão mapeados como query string da requisição. No nosso exemplo irá gerar `"limit=1"`.
 
