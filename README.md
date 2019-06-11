@@ -1,36 +1,22 @@
 # Início
 
-## Motivação
+## Bem vindo\(a\) à Pluga! :\)
 
-Na Pluga, nós mesmos conectamos diversas ferramentas web, automatizando as tarefas diárias. Só que esse processo não é tão rápido quanto poderia ser. Pode ser muito melhor! E assim, decidimos escalar exponencialmente o número de empresas conectadas. Mas como?
+A Pluga integra as ferramentas web mais utilizadas pelas micro e pequenas empresas, **criando assim uma comunicação inteligente entre elas**. E o melhor: **sem que o usuário precise escrever uma única linha de código**.
 
-Vamos adotar a tática do "crowdsource" e deixar que as empresas que queiram conectar suas aplicações web na Pluga possam fazer por elas mesmo.
+Criamos a Pluga porque acreditamos que **não é preciso ser um mestre Jedi em tecnologia para otimizar simples processos operacionais**.
 
-Desta forma, permitiremos que as empresas parceiras da Pluga conectem as suas aplicações através de uma plataforma de aplicações.
+A verdade é que, via APIs, já podemos conectar milhares de ferramentas web tornando a vida dos empreendedores muito mais simples e economizando seu tempo, antes gasto em trabalhos repetitivos e pouco estratégicos.
 
-## Primeiro passo
+Mais de 3 mil empresas usam a Pluga diariamente para integrar **50+ ferramentas web** \(Typeform, PagSeguro, Conta Azul e crescendo diariamente!\).
 
-Antes de começar a codar sua integração você vai precisar instalar nosso CLI, ele será sua principal ferramenta para desenvolver seu módulo de integração com a Pluga.
+É um motivo de orgulho para a equipe da Pluga saber que você tem interesse em participar dessa incrível comunidades de apps. :\)
 
-A plataforma da Pluga foi criada para rodar módulos de integrações feitos em JavaScript \(Node.js\) com o auxílio de alguns arquivos de configuração em JSON, e o Pluga CLI vai te ajudar tanto com a estrutura de pastas e arquivos esperado pela plataforma, como também com testes e até mesmo o envio do seu código para que a nossa equipe analise.
+Esperamos que a atual **documentação \(em beta\)** te ajude a desenvolver a sua aplicação dentro da Pluga. Como qualquer documentação ela não é exaustiva e, possivelmente, há lacunas que precisam ser preenchidas.
 
-Como o próprio CLI também é feito em Node.js, você pode instalar ele a partir do `npm` e iniciar seu projeto com o comando `init`.
+Por favor, qualquer dica nessa linha pode enviar direto para [o repositório dessa documentação](https://github.com/PlugaDotCo/pluga-docs/issues).
 
-```bash
-$ npm install -g pluga-cli
-$ pluga init my_app
-```
-
-{% hint style="info" %}
-Você pode consultar mais informações sobre a instalação e comandos do Pluga CLI em [github.com/PlugaDotCo/pluga-cli](https://github.com/PlugaDotCo/pluga-cli).
-{% endhint %}
-
-Para entender como criar uma integração na Pluga, devemos pensar que a aplicação será composta por essencialmente **4 componentes**:
-
-1. App, com descrição da sua aplicação e do método de autenticação da sua API;
-2. Triggers, com funções onde a Pluga recebe informações vindas da sua API;
-3. Actions, com funções onde a Pluga envia informações para a sua API;
-4. Helper Methods, que auxiliam os triggers e actions com dados extras.
-
-Após a criação do seu projeto, você pode iniciar sua configuração de App, onde vai definir informações como texto de descrição e autenticação da sua API, tudo em `lib/app.json`.
+Abs.  
+Leonardo Camelo  
+CTO da Pluga
 

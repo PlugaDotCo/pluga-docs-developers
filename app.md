@@ -1,4 +1,4 @@
-# Configuração do App
+# App
 
 O primeiro passo para se criar uma aplicação web dentro da Pluga é incluir os dados básicos de descrição \(nome, links para o site, URI base da API, descrição geral da aplicação, etc\) e o método de autenticação \(OAuth2, Basic Auth, Pass Through Querystring, etc\).
 
@@ -51,8 +51,8 @@ A forma de configurá-la é basicamente o preenchimento dos campos de um JSON. V
 
 ## Descrição do seu app
 
-* **app\_id**: Identifica sua aplicação web. Ele deve ser único dentro da Pluga \(iremos validar se já não existe alguma aplicação com esse app\_id\). Usualmente é o nome da sua aplicação em minúscula, incluindo underscore \(`_`\) quando houver espaços ou outros caracteres especiais. Por exemplo, Google Sheets seria "google\_sheets", Boleto Simples seria "boleto\_simples", Paypal seria "paypal", PagSeguro seria "pag\_seguro", NFe.io seria "nfe\_io", etc. 
-* **name**: Nome da sua aplicação e como ele será exibido. Por exemplo: NFe.io, PagSeguro, Pagar.me e Boleto Simples. 
+* **app\_id**: Identifica sua aplicação web. Ele deve ser único dentro da Pluga \(iremos validar se já não existe alguma aplicação com esse app\_id\). Usualmente é o nome da sua aplicação em minúscula, incluindo underscore \(`_`\) quando houver espaços ou outros caracteres especiais. Por exemplo, Google Sheets seria "google\_sheets", Boleto Simples seria "boleto\_simples", Paypal seria "paypal", NFe.io seria "nfe\_io", etc. 
+* **name**: Nome da sua aplicação e como ele será exibido. Por exemplo: NFe.io, Pagar.me e Boleto Simples. 
 * **color**: Referente a cor da sua aplicação na Pluga, em hexadecimal. 
 * **description**: Uma breve descrição sobre sua aplicação e o que ela faz, entre 20 e 50 palavras. Explique o que torna sua ferramenta única. Não precisa mencionar a Pluga aqui, foque somente em descrever o seu negócio e sua proposta de valor. Um bom exemplo é o da RD Station: "\[...\] o software RD Station ajuda sua empresa a gerar mais leads qualificados e vendas, além de construir uma sólida estratégia de Marketing Digital." Observe que se deve preencher todas as opções de idioma para que a aplicação seja exibida corretamente nos diferentes idiomas. 
 * **website**: URL para a home da aplicação. 

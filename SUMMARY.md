@@ -1,7 +1,8 @@
 # Table of contents
 
 * [Início](README.md)
-* [Configuração do App](configuracao-do-app.md)
+* [Setup](setup.md)
+* [App](app.md)
 * [Triggers](triggers.md)
 * [Actions](actions.md)
 
