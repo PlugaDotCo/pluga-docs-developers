@@ -201,7 +201,7 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação A
 {% endcode-tabs-item %}
 {% endcode-tabs %}
 
-* **type**: Tipo da autenticação. Neste caso "pass\_through\_header", para enviar a chave de autenticação como header das requisições para a sua API, exemplo `"Authentication: Token {{access_token}}"`. 
+* **type**: Tipo da autenticação. Neste caso "pass\_through\_header", para enviar as chaves de autenticação como header das requisições para a sua API, exemplo `"Authentication: Bearer {{access_token}}"`. 
 * **fields**: Lista dos campos que o usuário deverá preencher para realizar a autenticação via header. Cada campo é um objeto que pode conter os seguintes atributos. 
   * **name**: Nome do campo, sempre em minúsculo e espaços substituídos por `_`, exemplo: "token", "api\_key". 
   * **label**: Nome do campo que será exibido para o usuário. 
@@ -246,6 +246,22 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação M
 ```
 {% endcode-tabs-item %}
 {% endcode-tabs %}
+
+* **type**: Tipo da autenticação. Neste caso "pass\_through\_query\_string", para enviar as chaves de autenticação como parâmetros query string, exemplo `"access_token={{access_token}}"`. 
+* **fields**: A  
+
+
+  * **name:** Nome do campo, sempre em minúsculo e espaços substituídos por `_`, exemplo: "token", "api\_key".
+
+
+
+  * **label**: Nome do campo que será exibido para o usuário. 
+  * **type**: Este é o tipo do input que será mostrado para o usuário preencher e que também fazem parte da validação. Os valores possíveis são `text`, `password` e `email`. 
+  * **validations**: Lista de condições para que o campo possa ser validado. Cada condição é um objeto que contém os seguintes atributos: 
+    * **name**: Nome da condição desejada, os valores possíveis são: 
+      * **min\_length**: Tamanho mínimo de caracteres. 
+      * **max\_length**: Tamanho máximo de caracteres. 
+    * **value**: Valor da condição. No exemplo ilustrado do primeiro campo do Agendor, temos a condição `{ "name": "min_length", "value": 10 }`. Ou seja, o campo "token" será validado apenas se o número de caracteres for maior ou igual à 10.
 
 ### No Authentication \(no\_auth\)
 
