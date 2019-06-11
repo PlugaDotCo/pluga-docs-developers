@@ -248,7 +248,7 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação M
 {% endcode-tabs %}
 
 * **type**: Tipo da autenticação. Neste caso "pass\_through\_query\_string", para enviar as chaves de autenticação como parâmetros query string, exemplo `"access_token={{access_token}}"`. 
-* **fields**: A  
+* **fields**: Lista dos campos que o usuário deverá preencher para realizar a autenticação via query string. Cada campo é um objeto que pode conter os seguintes atributos.  
 
 
   * **name:** Nome do campo, sempre em minúsculo e espaços substituídos por `_`, exemplo: "token", "api\_key".
