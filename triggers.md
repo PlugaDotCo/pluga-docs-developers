@@ -1,12 +1,12 @@
 # Triggers
 
-Os triggers \(ou gatilhos\), são funções que definem quando e quais informações a Pluga deve recuperar da sua aplicação.
+Os triggers \(ou gatilhos\) são funções que definem quando e quais informações a Pluga deve recuperar da sua aplicação.
 
 As aplicações dentro da Pluga podem ter um, vários, ou mesmo nenhum trigger. Tudo depende se sua aplicação tem informações que sejam interessantes para serem fornecidas para outras aplicações integradas na Pluga.
 
 Para que uma automatização na Pluga funcione é necessário que exista um trigger numa aplicação A e um action numa aplicação B. O objetivo dessa seção é mostrar como criar triggers que permitirão à Pluga ligar sua aplicação aos actions já presentes na nossa plataforma.
 
-Cada trigger da sua aplicação deve ficar numa pasta em `lib/triggers`, sendo nomeada com o padrão [snake\_case](https://en.wikipedia.org/wiki/Snake_case) e contendo um arquivo JSON \(`meta.json`\) e um JavaScript \(`index.js`\). Como fizemos em outras seções, vamos explicar o processo a partir de exemplos reais.
+Cada trigger da sua aplicação deve ficar numa pasta em `lib/triggers`, sendo nomeada com o padrão [snake\_case](https://en.wikipedia.org/wiki/Snake_case), contendo um arquivo JSON \(`meta.json`\) e um JavaScript \(`index.js`\). Como fizemos em outras seções, vamos explicar o processo a partir de exemplos reais.
 
 ## Configuração em JSON \(meta.json\)
 
@@ -69,7 +69,10 @@ Vamos passar campo a campo para entender os seus significados e seus possíveis 
     * **description**: 
     * **field\_type**: 
 * **idempotent**: 
-* **trigger\_type**:
+* **trigger\_type**: 
+  * **polling**: 
+  * **webhook**: 
+  * **rest\_hook**:
 
 ## Configuração em JavaScript \(index.js\)
 
@@ -92,6 +95,7 @@ Abaixo temos a configuração da aplicação [Agendor](https://pluga.co/ferramen
  * @param {number} event.meta.lastReqAt - Last task handle timestamp.
  * @param {object} event.auth - Your app.json auth fields.
  * @param {object} event.input - Your meta.json fields.
+ * @param {object} event.payload - Your webhook request payload.
  *
  * @returns {Promise} Promise object represents an array of resources to handle.
  */

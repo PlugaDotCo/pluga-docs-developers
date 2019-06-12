@@ -51,7 +51,7 @@ A forma de configurá-la é basicamente o preenchimento de um aquivo JSON \(`lib
 
 ## Descrição do seu app
 
-* **app\_id**: Identifica sua aplicação web. Ele deve ser único dentro da Pluga \(iremos validar se já não existe alguma aplicação com esse app\_id\). Usualmente é o nome da sua aplicação em minúscula, incluindo underscore \(`_`\) quando houver espaços ou outros caracteres especiais. Por exemplo, Google Sheets seria "google\_sheets", Boleto Simples seria "boleto\_simples", Paypal seria "paypal", NFe.io seria "nfe\_io", etc. 
+* **app\_id**: Identifica sua aplicação web. Ele deve ser único dentro da Pluga \(iremos validar se já não existe alguma aplicação com esse `app_id`\). Usualmente é o nome da sua aplicação em [snake\_case](https://en.wikipedia.org/wiki/Snake_case). Por exemplo, Google Sheets seria "google\_sheets", Boleto Simples seria "boleto\_simples", Paypal seria "paypal" e NFe.io seria "nfe\_io". 
 * **name**: Nome da sua aplicação e como ele será exibido. Por exemplo: NFe.io, Pagar.me e Boleto Simples. 
 * **color**: Referente a cor da sua aplicação na Pluga, em hexadecimal. 
 * **description**: Uma breve descrição sobre sua aplicação e o que ela faz, entre 20 e 50 palavras. Explique o que torna sua ferramenta única. Não precisa mencionar a Pluga aqui, foque somente em descrever o seu negócio e sua proposta de valor. Um bom exemplo é o da [RD Station Marketing](https://pluga.co/ferramentas/rd_station): "_\[...\] o software RD Station ajuda sua empresa a gerar mais leads qualificados e vendas, além de construir uma sólida estratégia de Marketing Digital._" Observe que se deve preencher todas as opções de idioma para que a aplicação seja exibida corretamente nos diferentes idiomas. 
