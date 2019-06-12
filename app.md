@@ -281,7 +281,7 @@ As vezes não existe necessidade do usuário incluir as chaves de acesso da API 
 
 ## Checagem da autenticação
 
-Para que seja possível verificar se o usuário realmente incluiu chaves de acesso válidas, precisamos fazer alguma requisição \(método GET\) para a sua API, como um ping, e validar se recebemos 200 ou 401/403. Para isso vamos configurar o campo `ping_request`.
+Para que seja possível verificar se o usuário realmente incluiu chaves de acesso válidas, precisamos fazer alguma requisição \(método **GET**\) para a sua API, como um ping, e validar se recebemos o status **200** ou **401**/**403**. Para isso vamos configurar o campo `ping_request`.
 
 {% hint style="info" %}
 Estas são configurações comuns para todos os tipos de autenticações.
@@ -310,4 +310,9 @@ Estas são configurações comuns para todos os tipos de autenticações.
 
 * **method\_name**: Indica qual path da API deverá ser utilizada na requisição de validação. 
 * **params**: \[Opcional\] Parâmetros que serão mapeados como query string da requisição. No nosso exemplo irá gerar `"limit=1"`.
+
+Como não existe um padrão tão bem definido, algumas APIs sempre respondem o status **200**, mesmo quando não conseguem realizar a autenticação do usuário, mas retornam um campo indicando se a requisição foi bem sucedida ou não. Caso sua API siga este modelo, será necessário configurar o campo `status`. Se a sua API retorna o status **401** ou **403** quando a autenticação não é bem sucedida, apenas ignore essa configuração.
+
+* **field**: Campo da mensagem de retorno onde está o valor para verificação. 
+* **value**: Valor para que autenticação seja bem sucedida.
 
