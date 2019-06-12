@@ -10,20 +10,14 @@ Como fizemos em outras seções, vamos explicar o processo a partir de exemplos 
 
 ## Configuração em JSON
 
-Abaixo temos a configuração da aplicação Agendor.
+Abaixo temos a configuração da aplicação [Agendor](https://pluga.co/ferramentas/agendor).
 
 {% code-tabs %}
 {% code-tabs-item title="lib/triggers/deal\_won/meta.json" %}
 ```javascript
 {
-  "name": {
-    "pt_BR": "Negócio ganho/concluído",
-    "en": "Deal won"
-  },
-  "description": {
-    "pt_BR": "Negócio ganho/concluído",
-    "en": "Deal won"
-  },
+  "name": "Negócio ganho/concluído",
+  "description": "Recupera os negócios ganhos/concluídos, junto com a pessoa e empresa associada.",
   "trigger_fields": {
     "type": "local",
     "fields": [
@@ -62,6 +56,20 @@ Abaixo temos a configuração da aplicação Agendor.
 ```
 {% endcode-tabs-item %}
 {% endcode-tabs %}
+
+Vamos passar campo a campo para entender os seus significados e seus possíveis valores.
+
+* **name**: 
+* **description**: 
+* **trigger\_fields**: 
+  * **type**: 
+  * **fields**: 
+    * **key**: 
+    * **name**: 
+    * **description**: 
+    * **field\_type**: 
+* **idempotent**: 
+* **trigger\_type**:
 
 ## Configuração em JavaScript
 
@@ -172,6 +180,8 @@ exports.handle = (plg, event) => {
 
 ### Trigger do tipo webhook/rest\_hook
 
+{% code-tabs %}
+{% code-tabs-item title="lib/triggers/user\_created/index.js" %}
 ```javascript
 /**
  * Trigger handler
@@ -209,4 +219,6 @@ exports.handle = (plg, event) => {
   return Promise.resolve(formatUser(event.payload));
 };
 ```
+{% endcode-tabs-item %}
+{% endcode-tabs %}
 

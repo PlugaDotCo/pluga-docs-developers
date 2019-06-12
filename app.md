@@ -2,7 +2,7 @@
 
 O primeiro passo para se criar uma aplicação web dentro da Pluga é incluir os dados básicos de descrição \(nome, links para o site, URI base da API, descrição geral da aplicação, etc\) e o método de autenticação \(OAuth2, Basic Auth, Pass Through Querystring, etc\).
 
-E para explicar como fazê-la, nada melhor do que um exemplo real para ilustrar. Abaixo temos a configuração da aplicação Asana.
+E para explicar como fazê-la, nada melhor do que um exemplo real para ilustrar. Abaixo temos a configuração da aplicação [Asana](https://pluga.co/ferramentas/asana).
 
 {% code-tabs %}
 {% code-tabs-item title="lib/app.json" %}
@@ -47,20 +47,20 @@ E para explicar como fazê-la, nada melhor do que um exemplo real para ilustrar.
 {% endcode-tabs-item %}
 {% endcode-tabs %}
 
-A forma de configurá-la é basicamente o preenchimento de um aquivo JSON. Vamos passar campo a campo para entender os seus significados e seus possíveis valores.
+A forma de configurá-la é basicamente o preenchimento de um aquivo JSON \(`lib/app.json`\). Vamos passar campo a campo para entender os seus significados e seus possíveis valores.
 
 ## Descrição do seu app
 
 * **app\_id**: Identifica sua aplicação web. Ele deve ser único dentro da Pluga \(iremos validar se já não existe alguma aplicação com esse app\_id\). Usualmente é o nome da sua aplicação em minúscula, incluindo underscore \(`_`\) quando houver espaços ou outros caracteres especiais. Por exemplo, Google Sheets seria "google\_sheets", Boleto Simples seria "boleto\_simples", Paypal seria "paypal", NFe.io seria "nfe\_io", etc. 
 * **name**: Nome da sua aplicação e como ele será exibido. Por exemplo: NFe.io, Pagar.me e Boleto Simples. 
 * **color**: Referente a cor da sua aplicação na Pluga, em hexadecimal. 
-* **description**: Uma breve descrição sobre sua aplicação e o que ela faz, entre 20 e 50 palavras. Explique o que torna sua ferramenta única. Não precisa mencionar a Pluga aqui, foque somente em descrever o seu negócio e sua proposta de valor. Um bom exemplo é o da RD Station: "\[...\] o software RD Station ajuda sua empresa a gerar mais leads qualificados e vendas, além de construir uma sólida estratégia de Marketing Digital." Observe que se deve preencher todas as opções de idioma para que a aplicação seja exibida corretamente nos diferentes idiomas. 
+* **description**: Uma breve descrição sobre sua aplicação e o que ela faz, entre 20 e 50 palavras. Explique o que torna sua ferramenta única. Não precisa mencionar a Pluga aqui, foque somente em descrever o seu negócio e sua proposta de valor. Um bom exemplo é o da [RD Station Marketing](https://pluga.co/ferramentas/rd_station): "_\[...\] o software RD Station ajuda sua empresa a gerar mais leads qualificados e vendas, além de construir uma sólida estratégia de Marketing Digital._" Observe que se deve preencher todas as opções de idioma para que a aplicação seja exibida corretamente nos diferentes idiomas. 
 * **website**: URL para a home da aplicação. 
 * **signup\_url**: URL para a página de cadastro da aplicação. 
-* **api\_base\_uri**: URI base para as chamadas à sua API. Como as URI base podem ser diferentes dependendo de qual ambiente da aplicação se quer interagir, este campo é um objeto que permite indicar qual URI deve ser usada para cada ambiente que se deseja interagir. No caso da Asana possuímos apenas uma URI base \(`production`\), porém sua aplicação pode ter uma URI base para sandbox, por exemplo.
-  * **uri**: URI do ambiente e que será usada como base nas chamadas à API.
-  * **label**: Como será apresentado o ambiente para o usuário.
-  * **default**: Indica qual ambiente é o padrão se não houver alteração pelo usuário \(_esta propriedade deve estar presente apenas em uma opção de ambiente_\).
+* **api\_base\_uri**: URI base para as chamadas à sua API. Como as URI base podem ser diferentes dependendo de qual ambiente da aplicação se quer interagir, este campo é um objeto que permite indicar qual URI deve ser usada para cada ambiente que se deseja interagir. No caso da Asana possuímos apenas uma URI base \(`production`\), porém sua aplicação pode ter uma URI base para sandbox, por exemplo. 
+  * **uri**: URI do ambiente e que será usada como base nas chamadas à API. 
+  * **label**: Como será apresentado o ambiente para o usuário. 
+  * **default**: Indica qual ambiente é o padrão se não houver alteração pelo usuário. Essa propriedade deve estar presente apenas em uma opção de ambiente.
 
 ## Autenticação
 
@@ -68,7 +68,7 @@ Até o momento existem 5 formas de configurar a autenticação de uma aplicaçã
 
 ### OAuth 2 \(oauth\_2\)
 
-Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação Google Contacts para ilustrar como deve ser configurado o método de autenticação oauth\_2.
+Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [Google Contacts](https://pluga.co/ferramentas/google_contacts) para ilustrar como deve ser configurado o método de autenticação oauth\_2.
 
 {% code-tabs %}
 {% code-tabs-item title="lib/app.json" %}
@@ -117,7 +117,7 @@ Outros campos de configuração adicionais podem ser definidos, como no caso do 
 
 ### Basic Auth \(basic\_auth\)
 
-Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação Zendesk para ilustrar como deve ser configurado o método de autenticação basic\_auth.
+Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [Zendesk](https://pluga.co/ferramentas/zendesk) para ilustrar como deve ser configurado o método de autenticação basic\_auth.
 
 {% code-tabs %}
 {% code-tabs-item title="lib/app.json" %}
@@ -172,7 +172,7 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação Z
 
 ### Pass Through on Header \(pass\_through\_header\)
 
-Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação Agendor para ilustrar como deve ser configurado o método de autenticação pass\_through\_header.
+Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [Agendor](https://pluga.co/ferramentas/agendor) para ilustrar como deve ser configurado o método de autenticação pass\_through\_header.
 
 {% code-tabs %}
 {% code-tabs-item title="lib/app.json" %}
@@ -216,7 +216,7 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação A
 
 ### Pass Through on Query String \(pass\_through\_query\_string\)
 
-Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação Magento para ilustrar como deve ser configurado o método de autenticação pass\_through\_query\_string.
+Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [Magento](https://pluga.co/ferramentas/magento) para ilustrar como deve ser configurado o método de autenticação pass\_through\_query\_string.
 
 {% code-tabs %}
 {% code-tabs-item title="lib/app.json" %}
@@ -271,7 +271,7 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação M
 
 ### No Authentication \(no\_auth\)
 
-As vezes não existe necessidade do usuário incluir as chaves de acesso da API da sua aplicação. Nestes casos você deve configurar `"type": "no_auth"`. Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação Paypal para ilustrar como deve ser configurado o método de autenticação no\_auth.
+As vezes não existe necessidade do usuário incluir as chaves de acesso da API da sua aplicação. Nestes casos você deve configurar `"type": "no_auth"`. Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [Paypal](https://pluga.co/ferramentas/paypal) para ilustrar como deve ser configurado o método de autenticação no\_auth.
 
 {% code-tabs %}
 {% code-tabs-item title="lib/app.json" %}

@@ -22,5 +22,5 @@ Para entender como criar uma integração na Pluga, devemos pensar que a aplica�
 3. Actions, com funções onde a Pluga envia informações para a sua API;
 4. Helper Methods, que auxiliam os triggers e actions com dados extras.
 
-Após a criação do seu projeto, você pode iniciar sua configuração de App, onde vai definir informações como texto de descrição e autenticação da sua API, tudo em `lib/app.json`.
+Após a criação do seu projeto, você pode iniciar sua configuração de App, onde vai definir informações como texto de descrição e autenticação da sua API.
 
