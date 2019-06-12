@@ -59,8 +59,8 @@ Abaixo temos a configuração da aplicação [Agendor](https://pluga.co/ferramen
 
 Vamos passar campo a campo para entender os seus significados e seus possíveis valores.
 
-* **name**: 
-* **description**: 
+* **name**: Nome do seu trigger e como ele será chamado nas automatizações que serão geradas com ele. 
+* **description**: Uma breve descrição sobre seu trigger e que informações ele resgata. Isso é bastante importante para que a equipe da Pluga possa entender melhor as possibilidades de combinação com outras aplicações. 
 * **trigger\_fields**: 
   * **type**: 
   * **fields**: 
@@ -73,6 +73,10 @@ Vamos passar campo a campo para entender os seus significados e seus possíveis 
   * **polling**: 
   * **webhook**: 
   * **rest\_hook**:
+
+Webhook configs
+
+Resthook config
 
 ## Configuração em JavaScript \(index.js\)
 
