@@ -47,7 +47,7 @@ E para explicar como fazê-la, nada melhor do que um exemplo real para ilustrar.
 {% endcode-tabs-item %}
 {% endcode-tabs %}
 
-A forma de configurá-la é basicamente o preenchimento dos campos de um JSON. Vamos passar campo à campo para entender os seus significados e seus possíveis valores.
+A forma de configurá-la é basicamente o preenchimento de um aquivo JSON. Vamos passar campo a campo para entender os seus significados e seus possíveis valores.
 
 ## Descrição do seu app
 
@@ -228,7 +228,13 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação M
       {
         "name": "site",
         "label": "Site Completo (https://seusite.com)",
-        "type": "text"
+        "type": "text",
+        "validations": [
+          {
+            "name": "min_length",
+            "value": 13
+          }
+        ]
       },
       {
         "name": "api_user",
@@ -261,7 +267,7 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação M
     * **name**: Nome da condição desejada, os valores possíveis são: 
       * **min\_length**: Tamanho mínimo de caracteres. 
       * **max\_length**: Tamanho máximo de caracteres. 
-    * **value**: Valor da condição. No exemplo ilustrado do primeiro campo do Agendor, temos a condição `{ "name": "min_length", "value": 10 }`. Ou seja, o campo "token" será validado apenas se o número de caracteres for maior ou igual à 10.
+    * **value**: Valor da condição. No exemplo ilustrado do primeiro campo do Agendor, temos a condição `{ "name": "min_length", "value": 13 }`. Ou seja, o campo "token" será validado apenas se o número de caracteres for maior ou igual à 10.
 
 ### No Authentication \(no\_auth\)
 
