@@ -24,25 +24,21 @@ Abaixo temos a configuração do trigger de **negócios ganhos** da aplicação 
       {
         "key": "id",
         "name": "ID",
-        "description": "ID",
         "field_type": "integer"
       },
       {
         "key": "dealStatus.name",
         "name": "Status",
-        "description": "Status",
         "field_type": "string"
       },
       {
         "key": "createdAt",
         "name": "Data/hora de cadastro",
-        "description": "Data/hora de cadastro",
         "field_type": "datetime"
       },
       {
         "key": "value",
         "name": "Valor total",
-        "description": "Valor total",
         "field_type": "decimal"
       },
       // ...
@@ -61,13 +57,12 @@ Vamos passar campo a campo para entender os seus significados e seus possíveis 
 
 * **name**: Nome do seu trigger e como ele será chamado nas automatizações que serão geradas com ele. 
 * **description**: Uma breve descrição sobre seu trigger e que informações ele resgata. Isso é bastante importante para que a equipe da Pluga possa entender melhor as possibilidades de combinação com outras aplicações. 
-* **trigger\_fields**: 
-  * **type**: 
-  * **fields**: 
-    * **key**: 
-    * **name**: 
-    * **description**: 
-    * **field\_type**: 
+* **trigger\_fields**: A Pluga espera que seu trigger retorne uma lista de objetos JSON, onde cada objeto será um evento processado pela nossa plataforma. As configurações de `trigger_fields` definem quais atributos da sua API a Pluga pode disponibilizar para a configuração de automatizações. 
+  * **type**: Define que estratégia a Pluga deve usar para listar os atributos do seu trigger. Hoje a única opção disponível é `local`. 
+  * **fields**: Lista de atributos que serão disponibilizados no painel da Pluga para que o usuário possa escolher quais dados do seu trigger ele deseja enviar para outras aplicações via automatização. 
+    * **key**: Identificador do tributo em **Dot notation**. Ou seja, para identificar o `email` em `{ "email": "johndoe@example.com" }` usamos email e em `{ "payer": { "email": "johndoe@example.com" } }` usamos `payer.email`. 
+    * **name**: Nome do atributo que será exibido para o usuário. 
+    * **field\_type**: Indica o tipo do atributo para que a Pluga possa fazer algumas conversões, quando necessário. Os valores possíveis são `string`, `integer`, `decimal` e `datetime`. 
 * **idempotent**: 
 * **trigger\_type**: 
   * **polling**: 

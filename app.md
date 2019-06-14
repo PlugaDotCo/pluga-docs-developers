@@ -165,7 +165,7 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [
   * **name**: Nome do campo, sempre em minúsculo e espaços substituídos por `_`, exemplo: "token", "api\_key". 
   * **label**: Nome do campo que será exibido para o usuário. 
   * **mapping**: Indica qual campo se está mapeando. Os valores possíveis são `username` e `password`. 
-  * **type**: Este é o tipo do input que será mostrado para o usuário preencher e que também fazem parte da validação. Os valores possíveis são `text`, `password` e `email`. 
+  * **type**: Tipo do input que será mostrado para o usuário preencher e que também faz parte da validação. Os valores possíveis são `text`, `password` e `email`. 
   * **validations**: Lista de condições para que o campo possa ser validado. Cada condição é um objeto que contém os seguintes atributos: 
     * **name**: Nome da condição desejada, os valores possíveis são: 
       * **min\_length**: Tamanho mínimo de caracteres. 
@@ -210,7 +210,7 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [
   * **label**: Nome do campo que será exibido para o usuário. 
   * **mapping**: Indica qual header se está mapeando. 
   * **prefix**: \[Opcional\] Indica se há algum prefixo antes do valor preenchido pelo usuário no campo. 
-  * **type**: Este é o tipo do input que será mostrado para o usuário preencher e que também fazem parte da validação. Os valores possíveis são `text`, `password` e `email`. 
+  * **type**: Tipo do input que será mostrado para o usuário preencher e que também faz parte da validação. Os valores possíveis são `text`, `password` e `email`. 
   * **validations**: Lista de condições para que o campo possa ser validado. Cada condição é um objeto que contém os seguintes atributos: 
     * **name**: Nome da condição desejada, os valores possíveis são: 
       * **min\_length**: Tamanho mínimo de caracteres. 
@@ -266,7 +266,7 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [
 
 
   * **label**: Nome do campo que será exibido para o usuário. 
-  * **type**: Este é o tipo do input que será mostrado para o usuário preencher e que também fazem parte da validação. Os valores possíveis são `text`, `password` e `email`. 
+  * **type**: Tipo do input que será mostrado para o usuário preencher e que também faz parte da validação. Os valores possíveis são `text`, `password` e `email`. 
   * **validations**: Lista de condições para que o campo possa ser validado. Cada condição é um objeto que contém os seguintes atributos: 
     * **name**: Nome da condição desejada, os valores possíveis são: 
       * **min\_length**: Tamanho mínimo de caracteres. 
