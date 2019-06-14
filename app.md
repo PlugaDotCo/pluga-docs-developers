@@ -74,6 +74,7 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [
 {% code-tabs-item title="lib/app.json" %}
 ```javascript
 {
+  // ...
   "authentication": {
     "type": "oauth_2",
     "oauth_access_fields": {
@@ -123,6 +124,7 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [
 {% code-tabs-item title="lib/app.json" %}
 ```javascript
 {
+  // ...
   "authentication": {
     "type": "basic_auth",
     "basic_auth_format": "{username}/token:{password}",
@@ -178,6 +180,7 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [
 {% code-tabs-item title="lib/app.json" %}
 ```javascript
 {
+  // ...
   "authentication": {
     "type": "pass_through_header",
     "fields": [
@@ -222,6 +225,7 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [
 {% code-tabs-item title="lib/app.json" %}
 ```javascript
 {
+  // ...
   "authentication": {
     "type": "pass_through_query_string",
     "fields": [
@@ -277,6 +281,7 @@ As vezes não existe necessidade do usuário incluir as chaves de acesso da API 
 {% code-tabs-item title="lib/app.json" %}
 ```javascript
 {
+  // ...
   "authentication": {
     "type": "no_auth"
   }
@@ -297,6 +302,7 @@ Estas são configurações comuns para todos os tipos de autenticações.
 {% code-tabs-item title="lib/app.json" %}
 ```javascript
 {
+  // ...
   "authentication": {
     "ping_request": {
       "method_name": "/invoices",

@@ -10,7 +10,7 @@ Cada trigger da sua aplicação deve ficar numa pasta em `lib/triggers`, sendo n
 
 ## Configuração em JSON \(meta.json\)
 
-Abaixo temos a configuração da aplicação [Agendor](https://pluga.co/ferramentas/agendor).
+Abaixo temos a configuração do trigger de **negócios ganhos** da aplicação [Agendor](https://pluga.co/ferramentas/agendor).
 
 {% code-tabs %}
 {% code-tabs-item title="lib/triggers/deal\_won/meta.json" %}
@@ -74,15 +74,98 @@ Vamos passar campo a campo para entender os seus significados e seus possíveis 
   * **webhook**: 
   * **rest\_hook**:
 
-Webhook configs
+### Trigger do tipo webhook
 
-Resthook config
+Abaixo temos a configuração do trigger de **assinaturas criadas** da aplicação [Vindi](https://pluga.co/ferramentas/vindi).
+
+{% code-tabs %}
+{% code-tabs-item title="lib/triggers/subscription\_created/meta.json" %}
+```javascript
+{
+  // ...
+  "trigger_type": "webhook",
+  "webhook": {
+    "message_type": "object",
+    "field": "event.data.subscription",
+    "event_filter": {
+      "field": "event.type",
+      "events": [
+        "subscription_created"
+      ]
+    }
+  }
+}
+```
+{% endcode-tabs-item %}
+{% endcode-tabs %}
+
+* **message\_type**: 
+* **field**: 
+* **event\_filter**: 
+  * **field**: 
+  * **events**:
+
+### Trigger do tipo rest\_hook
+
+Abaixo temos a configuração do trigger de **usuários criados** da aplicação [Intercom](https://pluga.co/ferramentas/intercom).
+
+{% code-tabs %}
+{% code-tabs-item title="lib/triggers/user\_created/meta.json" %}
+```javascript
+{
+  // ...
+  "trigger_type": "rest_hook",
+  "webhook": {
+    "message_type": "object",
+    "field": "data.item",
+    "event_filter": {
+      "field": "topic",
+      "events": [
+        "user.created"
+      ]
+    },
+    "rest_hook_config": {
+      "create": {
+        "verb": "POST",
+        "method_name": "/subscriptions",
+        "params": {
+          "topics": [
+            "user.created"
+          ]
+        },
+        "json_api": true
+      },
+      "delete": {
+        "verb": "DELETE",
+        "method_name": "/subscriptions/{id}",
+        "json_api": true
+      },
+      "meta_params": {
+        "webhook_url": "url",
+        "webhook_id": "id"
+      }
+    }
+  }
+}
+```
+{% endcode-tabs-item %}
+{% endcode-tabs %}
+
+* **create**: 
+  * **verb**: 
+  * **method\_name**: 
+  * **params**: 
+  * **json\_api**: 
+* **delete**: 
+* **meta\_params**: 
+  * **webhook\_url**: 
+  * **webhook\_id**:
 
 ## Configuração em JavaScript \(index.js\)
 
 ### Trigger do tipo polling
 
-Abaixo temos a configuração da aplicação [Agendor](https://pluga.co/ferramentas/agendor).
+Abaixo temos a configuração do trigger de **negócios ganhos** da aplicação [Agendor](https://pluga.co/ferramentas/agendor).
 
 {% code-tabs %}
 {% code-tabs-item title="lib/triggers/deal\_won/index.js" %}
@@ -143,11 +226,6 @@ const formatPerson = (plg, event, person) => {
       person.product_names =
         person.products.map(p => p.name).join(', ');
       
-      person.birthday =
-        person.birthday
-        ? person.birthday.substr(5).split('-').reverse().join('/')
-        : null;
-      
       return person;
     });
   }
@@ -190,7 +268,7 @@ exports.handle = (plg, event) => {
 
 ### Trigger do tipo webhook/rest\_hook
 
-Abaixo temos a configuração da aplicação [Intercom](https://pluga.co/ferramentas/intercom).
+Abaixo temos a configuração do trigger de **usuários criados** da aplicação [Intercom](https://pluga.co/ferramentas/intercom).
 
 {% code-tabs %}
 {% code-tabs-item title="lib/triggers/user\_created/index.js" %}
