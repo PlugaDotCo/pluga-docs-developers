@@ -10,7 +10,9 @@ Cada trigger da sua aplicação deve ficar numa pasta em `lib/triggers`, sendo n
 
 ## Configuração em JSON \(meta.json\)
 
-No arquivo `meta.json` você vai configurar parâmetros como nome, atributos de retorno e outras informações estáticas do seu trigger. Abaixo temos a configuração do trigger de **negócios ganhos** da aplicação [Agendor](https://pluga.co/ferramentas/agendor).
+No arquivo `meta.json` você vai configurar parâmetros como nome, atributos de retorno e outras informações estáticas do seu trigger.
+
+Abaixo temos a configuração do trigger de **negócios ganhos** da aplicação [Agendor](https://pluga.co/ferramentas/agendor).
 
 {% code-tabs %}
 {% code-tabs-item title="lib/triggers/deal\_won/meta.json" %}
@@ -71,7 +73,9 @@ Vamos passar campo a campo para entender os seus significados e seus possíveis 
 
 ### Trigger do tipo webhook
 
-Quando seu trigger for do tipo **webhook**,  além dos campos listados acima você deve configurar algumas informações no campo `webhook`. Abaixo temos a configuração do trigger de **assinaturas criadas** da aplicação [Vindi](https://pluga.co/ferramentas/vindi).
+Quando seu trigger for do tipo **webhook**,  além dos campos listados acima você deve configurar algumas informações no campo `webhook`.
+
+Abaixo temos a configuração do trigger de **assinaturas criadas** da aplicação [Vindi](https://pluga.co/ferramentas/vindi).
 
 {% code-tabs %}
 {% code-tabs-item title="lib/triggers/subscription\_created/meta.json" %}
@@ -102,7 +106,9 @@ Quando seu trigger for do tipo **webhook**,  além dos campos listados acima voc
 
 ### Trigger do tipo rest\_hook
 
-Quando seu trigger for do tipo **rest\_hook**, você deve extender o campo `webhook` com algumas configurações em `rest_hook_config`. Abaixo temos a configuração do trigger de **usuários criados** da aplicação [Intercom](https://pluga.co/ferramentas/intercom).
+Quando seu trigger for do tipo **rest\_hook**, você deve extender o campo `webhook` com algumas configurações em `rest_hook_config`.
+
+Abaixo temos a configuração do trigger de **usuários criados** da aplicação [Intercom](https://pluga.co/ferramentas/intercom).
 
 {% code-tabs %}
 {% code-tabs-item title="lib/triggers/user\_created/meta.json" %}
@@ -158,9 +164,16 @@ Quando seu trigger for do tipo **rest\_hook**, você deve extender o campo `webh
 
 ## Configuração em JavaScript \(index.js\)
 
+No arquivo `index.js` você vai configurar o funcionamento dinâmico do seu trigger. Você deve expor uma função chamada `handle` que recebe 2 objetos como argumentos e retorna uma [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise). Esses argumentos são:
 
+* **plg**: Objeto contendo bibliotecas auxiliares para o desenvolvimento do seu trigger, como por exemplo a [axios](https://github.com/axios/axios). 
+* **event**: Objeto contendo os dados que seu trigger vai usar para resgatar os novos registros da sua API, como chaves de autenticação e mensagem recebida \(no caso do seu trigger ser do tipo `webhook` ou `rest_hook`\).
+
+O comportamento da sua função vai diferir um pouco de acordo com o tipo do seu trigger. Então vamos explicar cada cenário de maneira isolada a seguir.
 
 ### Trigger do tipo polling
+
+Nos triggers do tipo `polling`, onde a Pluga executará seu trigger periodicamente para buscar novos registros, sua função `handle` deve fazer requisições na sua API, formatar ou complementar as informações recebidas e retornar \(dentro de um Promise\) um array com os novos objetos encontrados.
 
 Abaixo temos a configuração do trigger de **negócios ganhos** da aplicação [Agendor](https://pluga.co/ferramentas/agendor).
 
@@ -178,7 +191,6 @@ Abaixo temos a configuração do trigger de **negócios ganhos** da aplicação 
  * @param {string} event.meta.baseURI - Environment base URI.
  * @param {number} event.meta.lastReqAt - Last task handle timestamp.
  * @param {object} event.auth - Your app.json auth fields.
- * @param {object} event.input - Your meta.json fields.
  * @param {object} event.payload - Your webhook request payload.
  *
  * @returns {Promise} Promise object with resources to handle.
@@ -263,6 +275,10 @@ exports.handle = (plg, event) => {
 {% endcode-tabs-item %}
 {% endcode-tabs %}
 
+{% hint style="info" %}
+É muito importante que você evite retornar dados antigos ou desnecessários do seu trigger. Uma boa prática são as APIs que disponibilizam filtros baseados em datetime, permitindo o uso do argumento `event.meta.lastReqAt` em nível de requisição, como no exemplo acima.
+{% endhint %}
+
 ### Trigger do tipo webhook/rest\_hook
 
 Abaixo temos a configuração do trigger de **usuários criados** da aplicação [Intercom](https://pluga.co/ferramentas/intercom).
@@ -281,7 +297,6 @@ Abaixo temos a configuração do trigger de **usuários criados** da aplicação
  * @param {string} event.meta.baseURI - Environment base URI.
  * @param {number} event.meta.lastReqAt - Last task handle timestamp.
  * @param {object} event.auth - Your app.json auth fields.
- * @param {object} event.input - Your meta.json fields.
  * @param {object} event.payload - Your webhook request payload.
  *
  * @returns {Promise} Promise object with resources to handle.
