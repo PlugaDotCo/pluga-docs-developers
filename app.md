@@ -104,7 +104,7 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [
   * **authorize\_url**: URL que o usuário será redirecionado. 
   * **access\_token\_url**: URL para recuperar o access token, após o usuário ter autorizado e o código temporário ter sido recuperado. 
   * **refresh\_token\_url**: \[Opcional\] URL para renovar o access token no caso de expiração. Para APIs onde o access token não expira, basta omitir este campo. 
-  * **access\_token\_placement**: Campo que indica como o access token deverá ser passado nas chamadas à sua API para autorizar o acesso. Os valores possíveis são: 
+  * **access\_token\_placement**: Indica como o access token deverá ser passado nas chamadas à sua API para autorizar o acesso. Os valores possíveis são: 
     * **header\_bearer**: Para passar o access token no header das requisições como um bearer token no formato `"Authorization: Bearer {{access_token}}"`. 
     * **header\_basic**: Para passar o access token no header da requisição como um basic token no formato `"Authorization: Basic {{access_token}}"`. 
     * **query\_string**: Para passar o access token como parâmetro da query string  no formato `"access_token={{access_token}}"`. 

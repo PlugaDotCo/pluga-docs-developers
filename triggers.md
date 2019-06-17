@@ -63,15 +63,15 @@ Vamos passar campo a campo para entender os seus significados e seus possíveis 
     * **key**: Identificador do tributo em **Dot notation**. Ou seja, para identificar o `email` em `{ "email": "johndoe@example.com" }` usamos email e em `{ "payer": { "email": "johndoe@example.com" } }` usamos `payer.email`. 
     * **name**: Nome do atributo que será exibido para o usuário. 
     * **field\_type**: Indica o tipo do atributo para que a Pluga possa fazer algumas conversões, quando necessário. Os valores possíveis são `string`, `integer`, `decimal` e `datetime`. 
-* **idempotent**: 
-* **trigger\_type**: 
-  * **polling**: 
-  * **webhook**: 
-  * **rest\_hook**:
+* **idempotent**: Lista de atributos que serão levados em consideração como [idempotent](https://en.wikipedia.org/wiki/Idempotence). Em muitos casos os triggers podem retornar o mesmo objeto mais de uma vez para a Pluga, para evitar que isso gere eventos duplicados nas automatizações você deve definir quais atributos definem seus objetos únicos na sua API, geralmente um ID. 
+* **trigger\_type**: Define que estratégia a Pluga deve usar para executar o seu trigger. Os valores possíveis são: 
+  * **polling**: Para que a Pluga execute seu trigger periodicamente em busca de novos registros na sua API, geralmente a partir de requisições GET. 
+  * **webhook**: Para que a Pluga aguarde notificações vindas da sua aplicação e só então execute seu trigger com as infromações recebidas. Nesse modelo o usuário deverá copiar uma URL gerada pela Pluga para dentro da sua aplicação. 
+  * **rest\_hook**: Muito similar ao modelo **webhook**, porém usando o conceito de [REST hooks](http://resthooks.org) para evitar que o usuário precise copiar uma URL gerada pela Pluga, proporcionando uma experiência flúida ao usuário junto com uma economia de iterações entre a Pluga e sua API.
 
 ### Trigger do tipo webhook
 
-Abaixo temos a configuração do trigger de **assinaturas criadas** da aplicação [Vindi](https://pluga.co/ferramentas/vindi).
+Quando seu trigger for do tipo **webhook**,  além dos campos listados acima você deve configurar algumas informações num campo `webhook`. Abaixo temos a configuração do trigger de **assinaturas criadas** da aplicação [Vindi](https://pluga.co/ferramentas/vindi).
 
 {% code-tabs %}
 {% code-tabs-item title="lib/triggers/subscription\_created/meta.json" %}
@@ -102,7 +102,7 @@ Abaixo temos a configuração do trigger de **assinaturas criadas** da aplicaç�
 
 ### Trigger do tipo rest\_hook
 
-Abaixo temos a configuração do trigger de **usuários criados** da aplicação [Intercom](https://pluga.co/ferramentas/intercom).
+Quando seu trigger for do tipo **rest\_hook**, você deve extender o campo `webhook` com algumas configurações em `rest_hook_config`. Abaixo temos a configuração do trigger de **usuários criados** da aplicação [Intercom](https://pluga.co/ferramentas/intercom).
 
 {% code-tabs %}
 {% code-tabs-item title="lib/triggers/user\_created/meta.json" %}
