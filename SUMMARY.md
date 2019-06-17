@@ -5,4 +5,5 @@
 * [App](app.md)
 * [Triggers](triggers.md)
 * [Actions](actions.md)
+* [Helper methods](helper-methods.md)
 

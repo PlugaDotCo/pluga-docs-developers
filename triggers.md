@@ -146,12 +146,12 @@ Quando seu trigger for do tipo **rest\_hook**, você deve extender o campo `webh
 {% endcode-tabs-item %}
 {% endcode-tabs %}
 
-* **create**: 
-  * **verb**: 
-  * **method\_name**: 
-  * **params**: 
-  * **json\_api**: 
-* **delete**: 
+* **create**: Definição da requisição para criar um hook na sua API. Será executada quando um usuário criar uma automatização usando seu trigger. 
+  * **verb**: Verbo, ou método HTTP, que será usado na requisição. 
+  * **method\_name**: Indica qual path da API deverá ser utilizada na requisição. 
+  * **params**: \[Opcional\] Parâmetros que serão mapeados como body da requisição. 
+  * **json\_api**: \[Opcional\] Define se a requisição deve ser enviada com o body em JSON e o header `Content-Type: application/json`. O comportamento padrão é enviar seus parâmetros como **x-www-form-urlencoded**. 
+* **delete**: Definição da requisição para excluir um hook na sua API. Será executada quando um usuário excluir uma automatização usando seu trigger. Possui os mesmos parâmetros da configuração de **create**. 
 * **meta\_params**: 
   * **webhook\_url**: 
   * **webhook\_id**:
