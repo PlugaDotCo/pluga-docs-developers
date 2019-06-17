@@ -66,12 +66,12 @@ Vamos passar campo a campo para entender os seus significados e seus possíveis 
 * **idempotent**: Lista de atributos que serão levados em consideração como [idempotent](https://en.wikipedia.org/wiki/Idempotence). Em muitos casos os triggers podem retornar o mesmo objeto mais de uma vez para a Pluga, para evitar que isso gere eventos duplicados nas automatizações você deve definir quais atributos definem seus objetos únicos na sua API, geralmente um ID. 
 * **trigger\_type**: Define que estratégia a Pluga deve usar para executar o seu trigger. Os valores possíveis são: 
   * **polling**: Para que a Pluga execute seu trigger periodicamente em busca de novos registros na sua API, geralmente a partir de requisições GET. 
-  * **webhook**: Para que a Pluga aguarde notificações vindas da sua aplicação e só então execute seu trigger com as infromações recebidas. Nesse modelo o usuário deverá copiar uma URL gerada pela Pluga para dentro da sua aplicação. 
+  * **webhook**: Para que a Pluga aguarde requisições vindas da sua aplicação e só então execute seu trigger com as infromações recebidas. Nesse modelo o usuário deverá copiar uma URL gerada pela Pluga para dentro da sua aplicação. 
   * **rest\_hook**: Muito similar ao modelo **webhook**, porém usando o conceito de [REST hooks](http://resthooks.org) para evitar que o usuário precise copiar uma URL gerada pela Pluga, proporcionando uma experiência flúida ao usuário junto com uma economia de iterações entre a Pluga e sua API.
 
 ### Trigger do tipo webhook
 
-Quando seu trigger for do tipo **webhook**,  além dos campos listados acima você deve configurar algumas informações num campo `webhook`. Abaixo temos a configuração do trigger de **assinaturas criadas** da aplicação [Vindi](https://pluga.co/ferramentas/vindi).
+Quando seu trigger for do tipo **webhook**,  além dos campos listados acima você deve configurar algumas informações no campo `webhook`. Abaixo temos a configuração do trigger de **assinaturas criadas** da aplicação [Vindi](https://pluga.co/ferramentas/vindi).
 
 {% code-tabs %}
 {% code-tabs-item title="lib/triggers/subscription\_created/meta.json" %}
@@ -81,7 +81,6 @@ Quando seu trigger for do tipo **webhook**,  além dos campos listados acima voc
   "trigger_type": "webhook",
   "webhook": {
     "message_type": "object",
-    "field": "event.data.subscription",
     "event_filter": {
       "field": "event.type",
       "events": [
@@ -94,11 +93,12 @@ Quando seu trigger for do tipo **webhook**,  além dos campos listados acima voc
 {% endcode-tabs-item %}
 {% endcode-tabs %}
 
-* **message\_type**: 
-* **field**: 
-* **event\_filter**: 
-  * **field**: 
-  * **events**:
+* **message\_type**: Indica o tipo de mensagem que sua API irá enviar para a Pluga, acionando o trigger. Os valores possíveis são: 
+  * **object**: Quando as notificações de webhook da sua API enviam apenas **1** objeto por requisição. 
+  * **list**: Quando as notificações de webhook da sua API podem enviar **N** objetos por requisição. 
+* **event\_filter**: \[opcional\] Filtro que será aplicado pela Pluga quando receber notificações da sua API, evitando que seu trigger seja acionado para eventos fora do seu propósito. 
+  * **field**: Atributo da mensagem que será usado para o filtro, em **Dot notation**. 
+  * **events**: Lista de valores permitidos para o atributo definido em **field**.
 
 ### Trigger do tipo rest\_hook
 
@@ -179,7 +179,7 @@ Abaixo temos a configuração do trigger de **negócios ganhos** da aplicação 
  * @param {object} event.input - Your meta.json fields.
  * @param {object} event.payload - Your webhook request payload.
  *
- * @returns {Promise} Promise object represents an array of resources to handle.
+ * @returns {Promise} Promise object with resources to handle.
  */
 
 const formatOrganization = (plg, event, organization) => {
@@ -282,7 +282,7 @@ Abaixo temos a configuração do trigger de **usuários criados** da aplicação
  * @param {object} event.input - Your meta.json fields.
  * @param {object} event.payload - Your webhook request payload.
  *
- * @returns {Promise} Promise object represents an array of resources to handle.
+ * @returns {Promise} Promise object with resources to handle.
  */
 
 const formatUser = (user) => {
