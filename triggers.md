@@ -10,7 +10,7 @@ Cada trigger da sua aplicação deve ficar numa pasta em `lib/triggers`, sendo n
 
 ## Configuração em JSON \(meta.json\)
 
-Abaixo temos a configuração do trigger de **negócios ganhos** da aplicação [Agendor](https://pluga.co/ferramentas/agendor).
+No arquivo `meta.json` você vai configurar parâmetros como nome, atributos de retorno e outras informações estáticas do seu trigger. Abaixo temos a configuração do trigger de **negócios ganhos** da aplicação [Agendor](https://pluga.co/ferramentas/agendor).
 
 {% code-tabs %}
 {% code-tabs-item title="lib/triggers/deal\_won/meta.json" %}
@@ -157,6 +157,8 @@ Quando seu trigger for do tipo **rest\_hook**, você deve extender o campo `webh
   * **webhook\_id**: Indica qual atributo na resposta da requisição de **create** é o identificador do webhook criado. A Pluga vai persistir esse dado e ele estará disponível para interpolação na requisição de **delete**.
 
 ## Configuração em JavaScript \(index.js\)
+
+
 
 ### Trigger do tipo polling
 
