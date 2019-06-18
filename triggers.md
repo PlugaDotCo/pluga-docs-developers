@@ -2,7 +2,7 @@
 
 Os triggers \(ou gatilhos\) são funções que definem quando e quais informações a Pluga deve recuperar da sua aplicação.
 
-As aplicações dentro da Pluga podem ter um, vários, ou mesmo nenhum trigger. Tudo depende se sua aplicação tem informações que sejam interessantes para serem fornecidas para outras aplicações integradas na Pluga.
+As aplicações dentro da Pluga podem ter um, vários, ou mesmo nenhum trigger. Tudo depende se sua aplicação possui informações que sejam interessantes para serem fornecidas para [outras aplicações integradas na Pluga](https://pluga.co/ferramentas).
 
 Para que uma automatização na Pluga funcione é necessário que exista um trigger numa aplicação A e um action numa aplicação B. O objetivo dessa seção é mostrar como criar triggers que permitirão à Pluga ligar sua aplicação aos actions já presentes na nossa plataforma.
 
