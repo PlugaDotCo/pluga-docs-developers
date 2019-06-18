@@ -66,9 +66,9 @@ Vamos passar campo a campo para entender os seus significados e seus possíveis 
     * **name**: Nome do atributo que será exibido para o usuário. 
     * **field\_type**: Indica o tipo do atributo para que a Pluga possa fazer algumas conversões, quando necessário. Os valores possíveis são `string`, `integer`, `decimal` e `datetime`. 
 * **idempotent**: Lista de atributos que serão levados em consideração como [idempotent](https://en.wikipedia.org/wiki/Idempotence). Em muitos casos os triggers podem retornar o mesmo objeto mais de uma vez para a Pluga, para evitar que isso gere eventos duplicados nas automatizações você deve definir quais atributos definem seus objetos únicos na sua API, geralmente um ID. 
-* **trigger\_type**: Define que estratégia a Pluga deve usar para executar o seu trigger. Os valores possíveis são: 
+* **trigger\_type**: Define qual estratégia a Pluga deve usar para executar o seu trigger. Os valores possíveis são: 
   * **polling**: Para que a Pluga execute seu trigger periodicamente em busca de novos registros na sua API, geralmente a partir de requisições GET. 
-  * **webhook**: Para que a Pluga aguarde requisições vindas da sua aplicação e só então execute seu trigger com as infromações recebidas. Nesse modelo o usuário deverá copiar uma URL gerada pela Pluga para dentro da sua aplicação. 
+  * **webhook**: Para que a Pluga aguarde requisições vindas da sua aplicação e só então execute seu trigger com as informações recebidas. Nesse modelo o usuário deverá copiar uma URL gerada pela Pluga para dentro da sua aplicação. 
   * **rest\_hook**: Muito similar ao modelo **webhook**, porém usando o conceito de [REST hooks](http://resthooks.org) para evitar que o usuário precise copiar uma URL gerada pela Pluga, proporcionando uma experiência flúida ao usuário junto com uma economia de iterações entre a Pluga e sua API.
 
 ### Trigger do tipo webhook
@@ -106,7 +106,7 @@ Abaixo temos a configuração do trigger de **assinaturas criadas** da aplicaç�
 
 ### Trigger do tipo rest\_hook
 
-Quando seu trigger for do tipo **rest\_hook**, você deve extender o campo `webhook` com algumas configurações em `rest_hook_config`.
+Quando seu trigger for do tipo **rest\_hook**, você deve extender o campo `webhook` com algumas configurações no subcampo `rest_hook_config`.
 
 Abaixo temos a configuração do trigger de **usuários criados** da aplicação [Intercom](https://pluga.co/ferramentas/intercom).
 
@@ -152,28 +152,28 @@ Abaixo temos a configuração do trigger de **usuários criados** da aplicação
 {% endcode-tabs-item %}
 {% endcode-tabs %}
 
-* **create**: Definição da requisição para criar um webhook na sua API. Será executada quando um usuário criar uma automatização usando seu trigger. 
+* **create**: Definição da requisição para criar um webhook na sua API. Será executada quando um usuário criar uma automatização usando o seu trigger. 
   * **verb**: Verbo, ou método HTTP, que será usado na requisição. 
   * **method\_name**: Indica qual path da API deverá ser utilizada na requisição. 
   * **params**: \[Opcional\] Parâmetros que serão mapeados como body da requisição. 
-  * **json\_api**: \[Opcional\] Define se a requisição deve ser enviada com o body em JSON e o header `Content-Type: application/json`. O comportamento padrão é enviar seus parâmetros como **x-www-form-urlencoded**. 
-* **delete**: Definição da requisição para excluir um webhook na sua API. Será executada quando um usuário excluir uma automatização usando seu trigger. Possui os mesmos parâmetros da configuração de **create**. 
+  * **json\_api**: \[Opcional\] Define se a requisição deve ser enviada com o body em JSON e o header `Content-Type: application/json`. O comportamento padrão é enviar seus parâmetros como **``**`x-www-form-urlencoded`. 
+* **delete**: Definição da requisição para excluir um webhook na sua API. Será executada quando um usuário excluir uma automatização usando o seu trigger. Possui os mesmos parâmetros da configuração de **create**. 
 * **meta\_params**: Mapeamento de parâmetros da plataforma da Pluga para as requisições que serão feitas com sua API de REST hook. 
   * **webhook\_url**: Indica qual parâmetro deve ser preenchido na requisição de **create** com a URL única gerada pela Pluga para o novo webhook. 
   * **webhook\_id**: Indica qual atributo na resposta da requisição de **create** é o identificador do webhook criado. A Pluga vai persistir esse dado e ele estará disponível para interpolação na requisição de **delete**.
 
 ## Configuração em JavaScript \(index.js\)
 
-No arquivo `index.js` você vai configurar o funcionamento dinâmico do seu trigger. Você deve expor uma função chamada `handle` que recebe 2 objetos como argumentos e retorna uma [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise). Esses argumentos são:
+No arquivo `index.js` você vai configurar o funcionamento dinâmico do seu trigger. Você deve expor uma função chamada `handle` que recebe 2 objetos como argumentos e retorna uma [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise), esses argumentos são:
 
 * **plg**: Objeto contendo bibliotecas auxiliares para o desenvolvimento do seu trigger, como por exemplo a [axios](https://github.com/axios/axios). 
 * **event**: Objeto contendo os dados que seu trigger vai usar para resgatar os novos registros da sua API, como chaves de autenticação e mensagem recebida \(no caso do seu trigger ser do tipo `webhook` ou `rest_hook`\).
 
-O comportamento da sua função vai diferir um pouco de acordo com o tipo do seu trigger. Então vamos explicar cada cenário de maneira isolada a seguir.
+O comportamento da sua função vai diferir um pouco de acordo com o tipo do seu trigger. Então a seguir vamos explicar cada cenário de maneira isolada.
 
 ### Trigger do tipo polling
 
-Nos triggers do tipo `polling`, onde a Pluga executará seu trigger periodicamente para buscar novos registros, sua função `handle` deve fazer requisições na sua API, formatar ou complementar as informações recebidas e retornar \(dentro de um Promise\) um array com os novos objetos encontrados.
+Nos triggers do tipo `polling`, onde a Pluga vai executar seu trigger periodicamente para buscar novos registros, sua função `handle` deve fazer requisições na sua API, formatar ou complementar as informações recebidas e retornar \(dentro de uma Promise\) um array com os novos objetos encontrados.
 
 Abaixo temos a configuração do trigger de **negócios ganhos** da aplicação [Agendor](https://pluga.co/ferramentas/agendor).
 
@@ -276,10 +276,12 @@ exports.handle = (plg, event) => {
 {% endcode-tabs %}
 
 {% hint style="info" %}
-É muito importante que você evite retornar dados antigos ou desnecessários do seu trigger. Uma boa prática são as APIs que disponibilizam filtros baseados em datetime, permitindo o uso do argumento `event.meta.lastReqAt` em nível de requisição, como no exemplo acima.
+É muito importante que você evite retornar dados antigos ou desnecessários da sua API. Uma boa prática são as APIs que disponibilizam filtros baseados em **datetime**, permitindo o uso do argumento `event.meta.lastReqAt` em nível de requisição, como no exemplo acima.
 {% endhint %}
 
 ### Trigger do tipo webhook/rest\_hook
+
+Nos triggers do tipo `webhook` ou `rest_hook`, onde a Pluga vai aguardar por requisições feitas pela sua aplicação para executar o seu trigger, sua função `handle` deve receber a mensagem que sua aplicação enviou para a Pluga, formatar ou complementar as informações recebidas e retornar \(dentro de uma Promise\) esse objeto.
 
 Abaixo temos a configuração do trigger de **usuários criados** da aplicação [Intercom](https://pluga.co/ferramentas/intercom).
 
@@ -323,4 +325,8 @@ exports.handle = (plg, event) => {
 ```
 {% endcode-tabs-item %}
 {% endcode-tabs %}
+
+{% hint style="info" %}
+Caso a mensagem enviada pela sua aplicação tiver poucas informações \(como notificações que enviam apenas IDs\), você pode efetuar requisições extras para a sua API e assim complementar a mensagem.
+{% endhint %}
 
