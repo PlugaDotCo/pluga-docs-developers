@@ -62,7 +62,7 @@ Vamos passar campo a campo para entender os seus significados e seus possíveis 
 * **trigger\_fields**: A Pluga espera que seu trigger retorne uma lista de objetos JSON, onde cada objeto será um evento processado pela nossa plataforma. As configurações de `trigger_fields` definem quais atributos da sua API a Pluga pode disponibilizar para a configuração de automatizações. 
   * **type**: Define que estratégia a Pluga deve usar para listar os atributos do seu trigger. Hoje a única opção disponível é `local`. 
   * **fields**: Lista de atributos que serão disponibilizados no painel da Pluga para que o usuário possa escolher quais dados do seu trigger ele deseja enviar para outras aplicações via automatização. 
-    * **key**: Identificador do tributo em **Dot notation**. Ou seja, para identificar o `email` em `{ "email": "johndoe@example.com" }` usamos email e em `{ "payer": { "email": "johndoe@example.com" } }` usamos `payer.email`. 
+    * **key**: Identificador do atributo em **dot notation**. Ou seja, para identificar o `email` em `{ "email": "johndoe@example.com" }` usamos `email` e em `{ "payer": { "email": "johndoe@example.com" } }` usamos `payer.email`. 
     * **name**: Nome do atributo que será exibido para o usuário. 
     * **field\_type**: Indica o tipo do atributo para que a Pluga possa fazer algumas conversões, quando necessário. Os valores possíveis são `string`, `integer`, `decimal` e `datetime`. 
 * **idempotent**: Lista de atributos que serão levados em consideração como [idempotent](https://en.wikipedia.org/wiki/Idempotence). Em muitos casos os triggers podem retornar o mesmo objeto mais de uma vez para a Pluga, para evitar que isso gere eventos duplicados nas automatizações você deve definir quais atributos definem seus objetos únicos na sua API, geralmente um ID. 
@@ -101,7 +101,7 @@ Abaixo temos a configuração do trigger de **assinaturas criadas** da aplicaç�
   * **object**: Quando as notificações de webhook da sua API enviam apenas **1** objeto por requisição. 
   * **list**: Quando as notificações de webhook da sua API podem enviar **N** objetos por requisição. 
 * **event\_filter**: \[opcional\] Filtro que será aplicado pela Pluga quando receber notificações da sua API, evitando que seu trigger seja acionado para eventos fora do seu propósito. 
-  * **field**: Atributo da mensagem que será usado para o filtro, em **Dot notation**. 
+  * **field**: Atributo da mensagem que será usado para o filtro, em **dot notation**. 
   * **events**: Lista de valores permitidos para o atributo definido em **field**.
 
 ### Trigger do tipo rest\_hook

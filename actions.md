@@ -33,7 +33,7 @@ Abaixo temos a configuração do action de **criar/atualizar usuário** da aplic
           "en": "User email"
         },
         "required": true,
-        "visible": true,
+        "advanced": false,
         "field_type": "custom",
         "data_type": "string"
       },
@@ -48,7 +48,7 @@ Abaixo temos a configuração do action de **criar/atualizar usuário** da aplic
           "en": "User name"
         },
         "required": false,
-        "visible": true,
+        "advanced": false,
         "field_type": "custom",
         "data_type": "string"
       },
@@ -63,7 +63,7 @@ Abaixo temos a configuração do action de **criar/atualizar usuário** da aplic
           "en": "User's company name"
         },
         "required": false,
-        "visible": true,
+        "advanced": false,
         "field_type": "custom",
         "data_type": "string"
       },
@@ -79,15 +79,25 @@ Vamos passar campo a campo para entender os seus significados e seus possíveis 
 
 * **name**: Nome do seu action e como ele será chamado nas automatizações que serão geradas com ele. 
 * **description**: Uma breve descrição sobre seu action e que informações ele resgata. Isso é bastante importante para que a equipe da Pluga possa entender melhor as possibilidades de combinação com outras aplicações. 
-* **action\_fields**: 
-  * **fields**: 
-    * **key**: 
-    * **name**: 
-    * **description**: 
-    * **required**: 
-    * **visible**: 
-    * **field\_type**: 
-    * **data\_type**:
+* **action\_fields**: A Pluga vai montar um objeto JSON para ser processado pelo seu action a cada evento retornado pelo trigger associado pelo usuário. As configurações de `action_fields` definem quais atributos esse objeto deve ter. 
+  * **fields**: Lista de campos que serão exibidos no painel da Pluga para que o usuário possa preencher com informações estáticas ou dinâmicas, através dos atributos dos triggers. 
+    * **key**: Identificador do atributo em dot notation. Ou seja, para gerar o objeto `{ "email": "johndoe@example.com" }` usamos `email` e para gerar `{ "payer": { "email": "johndoe@example.com" } }` usamos `payer.email`. 
+    * **name**: Nome do campo que será exibido para o usuário. Lembre-se de preencher para todos os idiomas disponíveis na Pluga. 
+    * **description**: Uma breve descrição sobre o campo, será exibido como um tooltip acima do campo para informar usuários que tiverem dúvidas sobre como preencher esse campo. Lembre-se de preencher para todos os idiomas disponíveis na Pluga. 
+    * **required**: Indica se o campo é obrigatório ou não. 
+    * **advanced**: Define se o campo deve aparecer numa área de "campos avançados" no painel da Pluga. É recomendado incluir apenas campos opcionais como `"advanced": true`. 
+    * **field\_type**: Indica que tipo de campo será exibido para o usuário preencher no painel da Pluga. Os valores possíveis são: 
+      * **string**: Campo padrão de texto, apenas com conteúdo estático. 
+      * **custom**: Campo de texto com a possibilidade do usuário inserir informações dinâmicas a partir de referências a atributos do trigger que ele estiver ligando ao seu action. 
+      * **custom\_textarea**: Campo de texto com as mesmas características do tipo **custom**, porém usando o elemento HTML `textarea` como base. 
+      * **dropdown**: 
+    * **list**: 
+    * **data\_type**:  
+      * **string**: 
+      * **integer**: 
+      * **decimal**: 
+      * **datetime**: 
+      * **boolean**:
 
 ## Configuração em JavaScript \(index.js\)
 
