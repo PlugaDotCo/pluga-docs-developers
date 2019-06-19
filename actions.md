@@ -90,14 +90,12 @@ Vamos passar campo a campo para entender os seus significados e seus possíveis 
       * **string**: Campo padrão de texto, apenas com conteúdo estático. 
       * **custom**: Campo de texto com a possibilidade do usuário inserir informações dinâmicas a partir de referências a atributos do trigger que ele estiver ligando ao seu action. 
       * **custom\_textarea**: Campo de texto com as mesmas características do tipo **custom**, porém usando o elemento HTML `textarea` como base. 
-      * **dropdown**: 
-    * **list**: 
-    * **data\_type**:  
-      * **string**: 
-      * **integer**: 
-      * **decimal**: 
-      * **datetime**: 
-      * **boolean**:
+      * **dropdown**: Campo de multipla escolha, as opções serão exibidas de acordo com a configuração do parâmetro **list**. 
+    * **list**: Define as opções que serão exibidas para o usuário em campos do tipo **dropdown**. 
+      * **type**: Define que estratégia a Pluga deve usar para listar as opções do seu campo. Os valores possíveis são `local` e `remote`. 
+      * **data**: Lista de opções para o tipo `local`. Deve ser configurada como um array de objetos, onde cada objeto deve ter um atributo `label` e um `value`. 
+      * **helper\_method**: Identificador do helper method que será usado para gerar a lista de opções para o tipo `remote`. Você pode entender melhor esse assunto na seção [Helper methods](helper-methods.md). 
+    * **data\_type**: Indica o tipo do atributo para que a Pluga possa fazer algumas conversões, quando necessário. Os valores possíveis são `string`, `integer`, `decimal`, `datetime` e `boolean`.
 
 ## Configuração em JavaScript \(index.js\)
 
