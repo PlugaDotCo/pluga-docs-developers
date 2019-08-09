@@ -71,6 +71,10 @@ Vamos passar campo a campo para entender os seus significados e seus possíveis 
   * **webhook**: Para que a Pluga aguarde requisições vindas da sua aplicação e só então execute seu trigger com as informações recebidas. Nesse modelo o usuário deverá copiar uma URL gerada pela Pluga para dentro da sua aplicação. 
   * **rest\_hook**: Muito similar ao modelo **webhook**, porém usando o conceito de [REST hooks](http://resthooks.org) para evitar que o usuário precise copiar uma URL gerada pela Pluga, proporcionando uma experiência flúida ao usuário junto com uma economia de iterações entre a Pluga e sua API.
 
+{% hint style="info" %}
+A configuração de `key` dos `trigger_fields.fields` não suporta arrays, logo caso o seu trigger retorne algum dado em array você deve tratar esse dado na parte em JavaScript da integração, geralmente fazendo um **join**.
+{% endhint %}
+
 ### Trigger do tipo webhook
 
 Quando seu trigger for do tipo **webhook**,  além dos campos listados acima você deve configurar algumas informações no campo `webhook`.

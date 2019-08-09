@@ -97,6 +97,10 @@ Vamos passar campo a campo para entender os seus significados e seus possíveis 
       * **helper\_method**: Identificador do helper method que será usado para gerar a lista de opções para o tipo `remote`. Você pode entender melhor esse assunto na seção [Helper methods](helper-methods.md). 
     * **data\_type**: Indica o tipo do atributo para que a Pluga possa fazer algumas conversões, quando necessário. Os valores possíveis são `string`, `integer`, `decimal`, `datetime` e `boolean`.
 
+{% hint style="info" %}
+A configuração de `key` dos `action_fields.fields` não suporta arrays, logo caso o seu action precise de algum dado em array você deve tratar esse dado na parte em JavaScript da integração, geralmente fazendo um **split**.
+{% endhint %}
+
 ## Configuração em JavaScript \(index.js\)
 
 No arquivo `index.js` você vai configurar o funcionamento dinâmico do seu action. Você deve export uma função `handle` que recebe 2 objetos como argumentos e retorna uma [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise), esses argumentos sâo:
