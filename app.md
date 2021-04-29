@@ -4,8 +4,7 @@ O primeiro passo para se criar uma aplicação web dentro da Pluga é incluir os
 
 E para explicar como fazê-la, nada melhor do que um exemplo real para ilustrar. Abaixo temos a configuração da aplicação [Asana](https://pluga.co/ferramentas/asana).
 
-{% code-tabs %}
-{% code-tabs-item title="lib/app.json" %}
+{% code title="lib/app.json" %}
 ```javascript
 {
   "app_id": "asana",
@@ -45,15 +44,14 @@ E para explicar como fazê-la, nada melhor do que um exemplo real para ilustrar.
   }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endcode %}
 
 A forma de configurá-la é basicamente o preenchimento de um aquivo JSON \(`lib/app.json`\). Vamos passar campo a campo para entender os seus significados e seus possíveis valores.
 
 ## Descrição do seu app
 
 * **app\_id**: Identifica sua aplicação. Essa identificação deve ser única dentro da Pluga \(iremos validar se já não existe alguma aplicação com esse `app_id`\). Usualmente é o nome da sua aplicação em [snake\_case](https://en.wikipedia.org/wiki/Snake_case). Por exemplo, Google Sheets seria "google\_sheets", Boleto Simples seria "boleto\_simples", Paypal seria "paypal" e NFe.io seria "nfe\_io". 
-* **version**: Identifica em qual versão a integração está, assim a equipe da Pluga consegue entender a evolção da integração dentro da plataforma. Recomendamos que use [semver](https://semver.org). 
+* **version**: Identifica em qual versão a integração está, assim a equipe da Pluga consegue entender a evolução da integração dentro da plataforma. Recomendamos que use [semver](https://semver.org). 
 * **name**: Nome da sua aplicação e como ele será exibido. Por exemplo: NFe.io, Pagar.me e Boleto Simples. 
 * **color**: Referente a cor da sua aplicação na Pluga, em hexadecimal. 
 * **description**: Uma breve descrição sobre sua aplicação e o que ela faz, entre 20 e 50 palavras. Explique o que torna sua ferramenta única. Não precisa mencionar a Pluga aqui, foque somente em descrever o seu negócio e sua proposta de valor. Um bom exemplo é o da [RD Station Marketing](https://pluga.co/ferramentas/rd_station): "_\[...\] o software RD Station ajuda sua empresa a gerar mais leads qualificados e vendas, além de construir uma sólida estratégia de Marketing Digital._" Observe que se deve preencher todas as opções de idioma para que a aplicação seja exibida corretamente nos diferentes idiomas. 
@@ -72,8 +70,7 @@ Até o momento existem 5 formas de configurar a autenticação de uma aplicaçã
 
 Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [Google Contacts](https://pluga.co/ferramentas/google_contacts) para ilustrar como deve ser configurado o método de autenticação oauth\_2.
 
-{% code-tabs %}
-{% code-tabs-item title="lib/app.json" %}
+{% code title="lib/app.json" %}
 ```javascript
 {
   // ...
@@ -96,8 +93,7 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [
   }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endcode %}
 
 * **type**: Tipo da autenticação. Neste caso "oauth\_2", para autenticação do tipo [OAuth 2](https://tools.ietf.org/html/rfc6749). 
 * **oauth\_access\_fields**: Campo que agrupará o conjunto de campos para descrever todos os parâmetros para a autenticação OAuth 2. 
@@ -115,15 +111,26 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [
   * **response\_type**: Nome do campo que contém o código temporário que será retornado via query string quando o usuário for redirecionado de volta pra Pluga.
 
 {% hint style="info" %}
-Outros campos de configuração adicionais podem ser definidos, como no caso do nosso exemplo `approval_prompt` utilizado pelo Google Contacts.
+Outros campos de configuração adicionais podem ser passados através do objeto `query_string` do campo `authentication`, como utilizado no Jira:
+
+```javascript
+{
+  // ...
+  "authentication": {
+    // ...
+    "query_string": {
+      "audience": "api.atlassian.com"
+    }
+  }
+}
+```
 {% endhint %}
 
 ### Basic Auth \(basic\_auth\)
 
 Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [Zendesk](https://pluga.co/ferramentas/zendesk) para ilustrar como deve ser configurado o método de autenticação basic\_auth.
 
-{% code-tabs %}
-{% code-tabs-item title="lib/app.json" %}
+{% code title="lib/app.json" %}
 ```javascript
 {
   // ...
@@ -158,8 +165,7 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [
   }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endcode %}
 
 * **type**: Tipo da autenticação. Neste caso "basic\_auth", para autenticação do tipo [HTTP Basic Auth](https://tools.ietf.org/html/rfc7235) passando usuário e senha no header, formato `"Authentication: Basic {{user_and_password_in_base64}}"`. 
 * **basic\_auth\_format**: \[Opcional\] Template que será usado para concatenar o username e o password antes de gerar o hash em base 64. Valor padrão `"{username}:{password}"`. 
@@ -178,8 +184,7 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [
 
 Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [Agendor](https://pluga.co/ferramentas/agendor) para ilustrar como deve ser configurado o método de autenticação pass\_through\_header.
 
-{% code-tabs %}
-{% code-tabs-item title="lib/app.json" %}
+{% code title="lib/app.json" %}
 ```javascript
 {
   // ...
@@ -203,8 +208,7 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [
   }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endcode %}
 
 * **type**: Tipo da autenticação. Neste caso "pass\_through\_header", para enviar as chaves de autenticação como header das requisições para a sua API, exemplo `"Authentication: Bearer {{access_token}}"`. 
 * **fields**: Lista dos campos que o usuário deverá preencher para realizar a autenticação via header. Cada campo é um objeto que pode conter os seguintes atributos. 
@@ -223,8 +227,7 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [
 
 Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [Magento](https://pluga.co/ferramentas/magento) para ilustrar como deve ser configurado o método de autenticação pass\_through\_query\_string.
 
-{% code-tabs %}
-{% code-tabs-item title="lib/app.json" %}
+{% code title="lib/app.json" %}
 ```javascript
 {
   // ...
@@ -256,8 +259,7 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [
   }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endcode %}
 
 * **type**: Tipo da autenticação. Neste caso "pass\_through\_query\_string", para enviar as chaves de autenticação como parâmetros query string, exemplo `"access_token={{access_token}}"`. 
 * **fields**: Lista dos campos que o usuário deverá preencher para realizar a autenticação via query string. Cada campo é um objeto que pode conter os seguintes atributos.  
@@ -279,8 +281,7 @@ Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [
 
 As vezes não existe necessidade do usuário incluir as chaves de acesso da API da sua aplicação. Nestes casos você deve configurar `"type": "no_auth"`. Abaixo temos o exemplo do JSON apenas do campo `authentication` da aplicação [Paypal](https://pluga.co/ferramentas/paypal) para ilustrar como deve ser configurado o método de autenticação no\_auth.
 
-{% code-tabs %}
-{% code-tabs-item title="lib/app.json" %}
+{% code title="lib/app.json" %}
 ```javascript
 {
   // ...
@@ -289,44 +290,45 @@ As vezes não existe necessidade do usuário incluir as chaves de acesso da API 
   }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endcode %}
 
 ## Checagem da autenticação
 
-Para que seja possível verificar se o usuário realmente incluiu chaves de acesso válidas, precisamos fazer alguma requisição \(método **GET**\) para a sua API, como um ping, e validar se recebemos o status **200** ou **401**/**403**. Para isso vamos configurar o campo `ping_request`.
+Para que seja possível verificar se o usuário realmente incluiu chaves de acesso válidas, precisamos fazer alguma requisição para a sua API, como um ping, e a partir do retorno saber se as credenciais são válidas ou não. Para isso vamos configurar o método `ping`.
+
+O Ping da sua aplicação deve ficar no arquivo \(`lib/index.js`\).
+
+No arquivo `index.js` você vai configurar o funcionamento dinâmico do seu `Ping`. Você deve expor uma função chamada `ping` que recebe 2 objetos como argumentos e retorna uma [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise), esses argumentos são:
+
+* **plg**: Objeto contendo bibliotecas auxiliares para o desenvolvimento do seu ping, como por exemplo a [axios](https://github.com/axios/axios). 
+* **event**: Objeto contendo os dados que seu ping vai usar para resgatar os novos registros da sua API, como chaves de autenticação.
+
+Abaixo temos a configuração do `ping` da aplicação [Lahar](https://pluga.co/ferramentas/lahar/integracao/).
 
 {% hint style="info" %}
 Estas são configurações comuns para todos os tipos de autenticações.
 {% endhint %}
 
-{% code-tabs %}
-{% code-tabs-item title="lib/app.json" %}
+{% code title="lib/index.js" %}
 ```javascript
-{
-  // ...
-  "authentication": {
-    "ping_request": {
-      "method_name": "/invoices",
-      "params": {
-        "limit": 1
-      }
-    }
-    "status": {
-      "field": "ok",
-      "value": true
-    }
-  }
-}
+exports.ping = (plg, event) => plg.axios({
+  method: 'get',
+  url: `${event.meta.baseURI}/api/custom_fields`,
+  params: {
+    token_api_lahar: event.auth.token_api_lahar,
+  },
+}).then((res) => {
+  const { data } = res.data;
+  if (data) throw new Error(data.error.message);
+
+  return data;
+});
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endcode %}
 
-* **method\_name**: Indica qual path da API deverá ser utilizada na requisição. 
-* **params**: \[Opcional\] Parâmetros que serão mapeados como query string da requisição. No nosso exemplo irá gerar `"limit=1"`.
+{% hint style="info" %}
+Como é um método para testar a validade das credenciais, é ideal que o endpoint configurado nessa requisição precise de autenticação e das mesmas permissões que serão necessárias nas requisições para a sua API que serão feitas nos triggers e actions da ferramenta. Ex: Caso o usuário digite as credenciais erradas ou não dê todas as permissões necessárias, esse método deverá retornar um erro, informando ao usuário que existe um problema de autenticação.
+{% endhint %}
 
-Como não existe um padrão tão bem definido, algumas APIs sempre respondem o status **200**, mesmo quando não conseguem realizar a autenticação do usuário, mas retornam um campo indicando se a requisição foi bem sucedida ou não. Caso sua API siga este modelo, será necessário configurar o campo `status`. Se a sua API retorna o status **401** ou **403** quando a autenticação não é bem sucedida, apenas ignore essa configuração.
-
-* **field**: Campo da mensagem de retorno onde está o valor para verificação. 
-* **value**: Valor para que autenticação seja bem sucedida.
+Caso a requisição venha com um status de erro **4xx** ou **5xx** o ping retornará falha e o usuário será informado. Caso mesmo com as credenciais inválidas a API retorne status **200**, é possível construir uma lógica no tratamento da resposta para disparar uma exceção, como é possível observar no exemplo acima.
 

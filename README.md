@@ -8,7 +8,7 @@ Criamos a Pluga porque acreditamos que **não é preciso ser um mestre Jedi em t
 
 A verdade é que, via APIs, já podemos conectar milhares de ferramentas web tornando a vida dos empreendedores muito mais simples e economizando seu tempo, antes gasto em trabalhos repetitivos e pouco estratégicos.
 
-Mais de 3 mil empresas usam a Pluga diariamente para integrar **50+ ferramentas web** \(Typeform, PagSeguro, Conta Azul e crescendo diariamente!\).
+Mais de 4 mil empresas usam a Pluga diariamente para integrar **70+ ferramentas web** \(Typeform, PagSeguro, Conta Azul e crescendo diariamente!\).
 
 É um motivo de orgulho para a equipe da Pluga saber que você tem interesse em participar dessa incrível comunidades de apps. :\)
 
