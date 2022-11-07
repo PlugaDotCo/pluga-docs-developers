@@ -1,20 +1,20 @@
 # Triggers
 
-Os triggers \(ou gatilhos\) são funções que definem quando e quais informações a Pluga deve recuperar da sua aplicação.
+Os triggers (ou gatilhos) são funções que definem quando e quais informações a Pluga deve recuperar da sua aplicação.
 
 As aplicações dentro da Pluga podem ter um, vários, ou mesmo nenhum trigger. Tudo depende se sua aplicação possui informações que sejam interessantes para serem fornecidas para [outras aplicações integradas na Pluga](https://pluga.co/ferramentas).
 
 Para que uma automatização na Pluga funcione é necessário que exista um trigger numa aplicação A e um action numa aplicação B. O objetivo dessa seção é mostrar como criar triggers que permitirão à Pluga ligar sua aplicação as actions já presentes na nossa plataforma.
 
-Cada trigger da sua aplicação deve ficar numa pasta em `lib/triggers`, sendo nomeada com o padrão [snake\_case](https://en.wikipedia.org/wiki/Snake_case), contendo um arquivo JSON \(`meta.json`\) e um JavaScript \(`index.js`\). Como fizemos em outras seções, vamos explicar o processo a partir de exemplos reais.
+Cada trigger da sua aplicação deve ficar numa pasta em `lib/triggers`, sendo nomeada com o padrão [snake\_case](https://en.wikipedia.org/wiki/Snake\_case), contendo um arquivo JSON (`meta.json`) e um JavaScript (`index.js`). Como fizemos em outras seções, vamos explicar o processo a partir de exemplos reais.
 
-## Configuração em JSON \(meta.json\)
+## Configuração em JSON (meta.json)
 
 No arquivo `meta.json` você vai configurar parâmetros como nome, atributos de retorno e outras informações estáticas do seu trigger.
 
 Abaixo temos a configuração do trigger de **negócios ganhos** da aplicação [Agendor](https://pluga.co/ferramentas/agendor).
 
-{% code title="lib/triggers/deal\_won/meta.json" %}
+{% code title="lib/triggers/deal_won/meta.json" %}
 ```javascript
 {
   "name": "Negócio ganho/concluído",
@@ -55,29 +55,42 @@ Abaixo temos a configuração do trigger de **negócios ganhos** da aplicação 
 
 Vamos passar campo a campo para entender os seus significados e seus possíveis valores.
 
-* **name**: Nome do seu trigger e como ele será chamado nas automatizações que serão geradas com ele. 
-* **description**: Uma breve descrição sobre seu trigger e que informações ele resgata. Isso é bastante importante para que a equipe da Pluga possa entender melhor as possibilidades de combinação com outras aplicações. 
-* **trigger\_fields**: A Pluga espera que seu trigger retorne uma lista de objetos JSON, onde cada objeto será um evento processado pela nossa plataforma. As configurações de `trigger_fields` definem quais atributos da sua API a Pluga pode disponibilizar para a configuração de automatizações. 
-  * **type**: Define que estratégia a Pluga deve usar para listar os atributos do seu trigger. Podendo ser`local` quando todos os atributos serão listados estaticamente ou `remote` quando os campos serão obtidos a partir do método **fields** do arquivo JavaScript \(`index.js`\). 
-  * **fields**: Lista de atributos que serão disponibilizados no painel da Pluga para que o usuário possa escolher quais dados do seu trigger ele deseja enviar para outras aplicações via automatização. 
-    * **key**: Identificador do atributo em **dot notation**. Ou seja, para identificar o `email` em `{ "email": "johndoe@example.com" }` usamos `email` e em `{ "payer": { "email": "johndoe@example.com" } }` usamos `payer.email`. 
-    * **name**: Nome do atributo que será exibido para o usuário. 
-    * **field\_type**: Indica o tipo do atributo para que a Pluga possa fazer algumas conversões, quando necessário. Os valores possíveis são `string`, `integer`, `decimal` e `datetime`. 
-* **idempotent**: Lista de atributos que serão levados em consideração como [idempotent](https://en.wikipedia.org/wiki/Idempotence). Em muitos casos os triggers podem retornar o mesmo objeto mais de uma vez para a Pluga, para evitar que isso gere eventos duplicados nas automatizações você deve definir quais atributos definem seus objetos únicos na sua API, geralmente um ID. 
-* **trigger\_type**: Define qual estratégia a Pluga deve usar para executar o seu trigger. Os valores possíveis são:  
+* **name**: Nome do seu trigger e como ele será chamado nas automatizações que serão geradas com ele.\
+
+* **description**: Uma breve descrição sobre seu trigger e que informações ele resgata. Isso é bastante importante para que a equipe da Pluga possa entender melhor as possibilidades de combinação com outras aplicações.\
+
+* **trigger\_fields**: A Pluga espera que seu trigger retorne uma lista de objetos JSON, onde cada objeto será um evento processado pela nossa plataforma. As configurações de `trigger_fields` definem quais atributos da sua API a Pluga pode disponibilizar para a configuração de automatizações.\
+
+  * **type**: Define que estratégia a Pluga deve usar para listar os atributos do seu trigger. Podendo ser`local` quando todos os atributos serão listados estaticamente ou `remote` quando os campos serão obtidos a partir do método **fields** do arquivo JavaScript (`index.js`).\
+
+  * **fields**: Lista de atributos que serão disponibilizados no painel da Pluga para que o usuário possa escolher quais dados do seu trigger ele deseja enviar para outras aplicações via automatização.\
+
+    * **key**: Identificador do atributo em **dot notation**. Ou seja, para identificar o `email` em `{ "email": "johndoe@example.com" }` usamos `email` e em `{ "payer": { "email": "johndoe@example.com" } }` usamos `payer.email`.\
+
+    * **name**: Nome do atributo que será exibido para o usuário.\
+
+    * **field\_type**: Indica o tipo do atributo para que a Pluga possa fazer algumas conversões, quando necessário. Os valores possíveis são `string`, `integer`, `decimal` e `datetime`.\
+
+* **idempotent**: Lista de atributos que serão levados em consideração como [idempotent](https://en.wikipedia.org/wiki/Idempotence). Em muitos casos os triggers podem retornar o mesmo objeto mais de uma vez para a Pluga, para evitar que isso gere eventos duplicados nas automatizações você deve definir quais atributos definem seus objetos únicos na sua API, geralmente um ID.\
+
+*   **trigger\_type**: Define qual estratégia a Pluga deve usar para executar o seu trigger. Os valores possíveis são:\
 
 
-  * **polling**: Para que a Pluga execute seu trigger periodicamente em busca de novos registros na sua API, geralmente a partir de requisições GET. 
-  * **webhook**: Para que a Pluga aguarde requisições vindas da sua aplicação e só então execute seu trigger com as informações recebidas. Nesse modelo o usuário deverá copiar uma URL gerada pela Pluga para dentro da sua aplicação. 
-  * **rest\_hook**: Muito similar ao modelo **webhook**, porém usando o conceito de [REST hooks](http://resthooks.org) para evitar que o usuário precise copiar uma URL gerada pela Pluga, proporcionando uma experiência fluida ao usuário junto com uma economia de iterações entre a Pluga e sua API.
+    * **polling**: Para que a Pluga execute seu trigger periodicamente em busca de novos registros na sua API, geralmente a partir de requisições GET.\
 
-* **trigger\_rest\_hook**: **`true`** quando o trigger é do tipo `rest_hook` deve  possuir os métodos `subscribe` e `unsubscribe` no `index.js`. Os métodos `subscribe` e `unsubscribe` estão detalhados em [Trigger do tipo rest\_hook](triggers.md#trigger-do-tipo-rest_hook).
+    * **webhook**: Para que a Pluga aguarde requisições vindas da sua aplicação e só então execute seu trigger com as informações recebidas. Nesse modelo o usuário deverá copiar uma URL gerada pela Pluga para dentro da sua aplicação.\
 
- 
+    * **rest\_hook**: Muito similar ao modelo **webhook**, porém usando o conceito de [REST hooks](http://resthooks.org) para evitar que o usuário precise copiar uma URL gerada pela Pluga, proporcionando uma experiência fluida ao usuário junto com uma economia de iterações entre a Pluga e sua API.
 
-* **trigger\_custom\_fields**: **`true`** quando o trigger possui o método `custom_fields` no `index.js` para retornar os campos customizados do trigger. O método `custom_fields` está detalhado em [Listar campos customizados](triggers.md#listar-campos-customizados).
 
-* **trigger\_remote\_fields**: **`true`** quando o trigger possui o método no `fields` no `index.js` para retornar os atributos do trigger. O método `fields` está detalhado em [Listar atributos](triggers.md#listar-atributos).
+*   **trigger\_rest\_hook**: ** `true`** quando o trigger é do tipo `rest_hook` deve  possuir os métodos `subscribe` e `unsubscribe` no `index.js`. Os métodos `subscribe` e `unsubscribe` estão detalhados em [Trigger do tipo rest\_hook](triggers.md#trigger-do-tipo-rest\_hook).
+
+    &#x20;
+*   **trigger\_custom\_fields**: **`true`** quando o trigger possui o método `custom_fields` no `index.js` para retornar os campos customizados do trigger. O método `custom_fields` está detalhado em [Listar campos customizados](triggers.md#listar-campos-customizados).
+
+
+*   **trigger\_remote\_fields**: **`true`** quando o trigger possui o método no `fields` no `index.js` para retornar os atributos do trigger. O método `fields` está detalhado em [Listar atributos](triggers.md#listar-atributos).
+
 
 * **trigger\_sample\_data**: **`true`** quando o `index.js` do trigger possui o método `sample` para retornar dados de exemplo. O método `sample` está detalhado em [Exemplo de evento](triggers.md#exemplo-de-evento).
 
@@ -93,7 +106,7 @@ Quando seu trigger for do tipo **webhook ou rest\_hook**,  além dos campos list
 
 Abaixo temos a configuração do trigger de **assinaturas criadas** da aplicação [Vindi](https://pluga.co/ferramentas/vindi).
 
-{% code title="lib/triggers/subscription\_created/meta.json" %}
+{% code title="lib/triggers/subscription_created/meta.json" %}
 ```javascript
 {
   // ...
@@ -111,29 +124,35 @@ Abaixo temos a configuração do trigger de **assinaturas criadas** da aplicaç�
 ```
 {% endcode %}
 
-* **message\_type**: Indica o tipo de mensagem que sua API irá enviar para a Pluga, acionando o trigger. Os valores possíveis são: 
-  * **object**: Quando as notificações de webhook da sua API enviam apenas **1** objeto por requisição. 
-  * **list**: Quando as notificações de webhook da sua API podem enviar **N** objetos por requisição. 
-* **event\_filter**: \[opcional\] Filtro que será aplicado pela Pluga quando receber notificações da sua API, evitando que seu trigger seja acionado para eventos fora do seu propósito. 
-  * **field**: Atributo da mensagem que será usado para o filtro, em **dot notation**. 
+* **message\_type**: Indica o tipo de mensagem que sua API irá enviar para a Pluga, acionando o trigger. Os valores possíveis são:\
+
+  * **object**: Quando as notificações de webhook da sua API enviam apenas **1** objeto por requisição.\
+
+  * **list**: Quando as notificações de webhook da sua API podem enviar **N** objetos por requisição.\
+
+* **event\_filter**: \[opcional] Filtro que será aplicado pela Pluga quando receber notificações da sua API, evitando que seu trigger seja acionado para eventos fora do seu propósito.\
+
+  * **field**: Atributo da mensagem que será usado para o filtro, em **dot notation**.\
+
   * **events**: Lista de valores permitidos para o atributo definido em **field**.
 
-## Configuração em JavaScript \(index.js\)
+## Configuração em JavaScript (index.js)
 
-No arquivo `index.js` você vai configurar o funcionamento dinâmico do seu trigger. Você deve expor uma função chamada `handle` que recebe 2 objetos como argumentos e retorna uma [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise), esses argumentos são:
+No arquivo `index.js` você vai configurar o funcionamento dinâmico do seu trigger. Você deve expor uma função chamada `handle` que recebe 2 objetos como argumentos e retorna uma [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global\_Objects/Promise), esses argumentos são:
 
-* **plg**: Objeto contendo bibliotecas auxiliares para o desenvolvimento do seu trigger, como por exemplo a [axios](https://github.com/axios/axios). 
-* **event**: Objeto contendo os dados que seu trigger vai usar para resgatar os novos registros da sua API, como chaves de autenticação e mensagem recebida \(no caso do seu trigger ser do tipo `webhook` ou `rest_hook`\).
+* **plg**: Objeto contendo bibliotecas auxiliares para o desenvolvimento do seu trigger, como por exemplo a [axios](https://github.com/axios/axios).\
+
+* **event**: Objeto contendo os dados que seu trigger vai usar para resgatar os novos registros da sua API, como chaves de autenticação e mensagem recebida (no caso do seu trigger ser do tipo `webhook` ou `rest_hook`).
 
 O comportamento da sua função vai diferir um pouco de acordo com o tipo do seu trigger. Então a seguir vamos explicar cada cenário de maneira isolada.
 
 ### Trigger do tipo polling
 
-Nos triggers do tipo `polling`, onde a Pluga vai executar seu trigger periodicamente para buscar novos registros, sua função `handle` deve fazer requisições na sua API, formatar ou complementar as informações recebidas e retornar \(dentro de uma Promise\) um array com os novos objetos encontrados.
+Nos triggers do tipo `polling`, onde a Pluga vai executar seu trigger periodicamente para buscar novos registros, sua função `handle` deve fazer requisições na sua API, formatar ou complementar as informações recebidas e retornar (dentro de uma Promise) um array com os novos objetos encontrados.
 
 Abaixo temos a configuração do trigger de **negócios ganhos** da aplicação [Agendor](https://pluga.co/ferramentas/agendor).
 
-{% code title="lib/triggers/deal\_won/index.js" %}
+{% code title="lib/triggers/deal_won/index.js" %}
 ```javascript
 /**
  * Trigger handler
@@ -235,11 +254,11 @@ exports.handle = (plg, event) => {
 
 ### Trigger do tipo webhook
 
-Nos triggers do tipo `webhook` ou `rest_hook`, onde a Pluga vai aguardar por requisições feitas pela sua aplicação para executar o seu trigger, sua função `handle` deve receber a mensagem que sua aplicação enviou para a Pluga, formatar ou complementar as informações recebidas e retornar \(dentro de uma Promise\) esse objeto.
+Nos triggers do tipo `webhook` ou `rest_hook`, onde a Pluga vai aguardar por requisições feitas pela sua aplicação para executar o seu trigger, sua função `handle` deve receber a mensagem que sua aplicação enviou para a Pluga, formatar ou complementar as informações recebidas e retornar (dentro de uma Promise) esse objeto.
 
 Abaixo temos a configuração do trigger de **usuários criados** da aplicação [Intercom](https://pluga.co/ferramentas/intercom).
 
-{% code title="lib/triggers/user\_created/index.js" %}
+{% code title="lib/triggers/user_created/index.js" %}
 ```javascript
 /**
  * Trigger handler
@@ -279,26 +298,25 @@ exports.handle = (plg, event) => {
 {% endcode %}
 
 {% hint style="info" %}
-Caso a mensagem enviada pela sua aplicação tiver poucas informações \(como notificações que enviam apenas IDs\), você pode efetuar requisições extras para a sua API e assim complementar a mensagem.
+Caso a mensagem enviada pela sua aplicação tiver poucas informações (como notificações que enviam apenas IDs), você pode efetuar requisições extras para a sua API e assim complementar a mensagem.
 {% endhint %}
 
 ### Trigger do tipo rest\_hook
 
 A função handle de um trigger do tipo rest\_hook é da mesma forma de um trigger do tipo webhook, porém é necessário configurar mais duas funções: subscribe e unsubscribe.
 
-* **subscribe**
+*   **subscribe**
 
-  Define a requisição para criar um webhook na sua API. Será executada quando um usuário criar uma automatização usando o seu trigger.
+    Define a requisição para criar um webhook na sua API. Será executada quando um usuário criar uma automatização usando o seu trigger.
+*   **unsubscribe**
 
-* **unsubscribe**
-
-  Define a requisição para excluir um webhook na sua API. Será executada quando um usuário excluir uma automatização usando o seu trigger.
+    Define a requisição para excluir um webhook na sua API. Será executada quando um usuário excluir uma automatização usando o seu trigger.
 
 Abaixo temos a configuração das funções `subscribe` e `unsubscribe` do trigger de **nova oportunidade** da [Lahar](https://pluga.co/ferramentas/lahar/integracao/).
 
 {% tabs %}
 {% tab title="RestHook" %}
-{% code title="lib/triggers/new\_opportunity/index.js" %}
+{% code title="lib/triggers/new_opportunity/index.js" %}
 ```javascript
 // ...
 const restHooks = require('../../shared/restHooks');
@@ -359,7 +377,7 @@ Abaixo temos a configuração do `fields` do trigger de **card movido** da aplic
 
 {% tabs %}
 {% tab title="Fields" %}
-{% code title="lib/triggers/moved\_card/index.js" %}
+{% code title="lib/triggers/moved_card/index.js" %}
 ```javascript
 // ...
 const pipefyRequest = (plg, event, query) => plg.axios({
@@ -395,13 +413,16 @@ exports.fields = async (plg, event) => {
 {% endtab %}
 {% endtabs %}
 
-O retorno dessa função deverá ser a lista dos atributos que serão disponibilizados no painel da Pluga para que o usuário possa escolher quais dados do seu trigger ele deseja enviar para outras aplicações via automatização. 
+O retorno dessa função deverá ser a lista dos atributos que serão disponibilizados no painel da Pluga para que o usuário possa escolher quais dados do seu trigger ele deseja enviar para outras aplicações via automatização.&#x20;
 
 Cada atributo precisa ser retornado com as seguintes propriedades:
 
-* **key**: Identificador do atributo em **dot notation**. Ou seja, para identificar o `email` em `{ "email": "johndoe@example.com" }` usamos `email` e em `{ "payer": { "email": "johndoe@example.com" } }` usamos `payer.email`. 
-* **name**: Nome do atributo que será exibido para o usuário. 
-* **description**:`(opcional)` Descrição mais detalhada do que este atributo significa. 
+* **key**: Identificador do atributo em **dot notation**. Ou seja, para identificar o `email` em `{ "email": "johndoe@example.com" }` usamos `email` e em `{ "payer": { "email": "johndoe@example.com" } }` usamos `payer.email`.\
+
+* **name**: Nome do atributo que será exibido para o usuário.\
+
+* **description**:`(opcional)` Descrição mais detalhada do que este atributo significa.\
+
 * **field\_type**: Indica o tipo do atributo para que a Pluga possa fazer algumas conversões, quando necessário. Os valores possíveis são `string`, `integer`, `decimal` e `datetime`.
 
 {% hint style="warning" %}
@@ -416,7 +437,7 @@ Esse é o caso da [Lahar](https://pluga.co/ferramentas/lahar/integracao/). Abaix
 
 {% tabs %}
 {% tab title="Custom Fields" %}
-{% code title="lib/triggers/new\_opportunity/index.js" %}
+{% code title="lib/triggers/new_opportunity/index.js" %}
 ```javascript
 // ...
 const getCustomFields = (plg, event) => plg.axios({
@@ -447,13 +468,16 @@ exports.custom_fields = triggerCustomFields;
 {% endtab %}
 {% endtabs %}
 
-O retorno dessa função deverá ser a lista dos campos customizados que serão disponibilizados no painel da Pluga para que o usuário possa escolher quais dados do seu trigger ele deseja enviar para outras aplicações via automatização. 
+O retorno dessa função deverá ser a lista dos campos customizados que serão disponibilizados no painel da Pluga para que o usuário possa escolher quais dados do seu trigger ele deseja enviar para outras aplicações via automatização.&#x20;
 
 Assim como na função `fields`, cada campo customizado precisa ser retornado com as seguintes propriedades:
 
-* **key**: Identificador do atributo em **dot notation**. Ou seja, para identificar o `email` em `{ "email": "johndoe@example.com" }` usamos `email` e em `{ "payer": { "email": "johndoe@example.com" } }` usamos `payer.email`. 
-* **name**: Nome do atributo que será exibido para o usuário. 
-* **description**:`(opcional)` Descrição mais detalhada do que este atributo significa. 
+* **key**: Identificador do atributo em **dot notation**. Ou seja, para identificar o `email` em `{ "email": "johndoe@example.com" }` usamos `email` e em `{ "payer": { "email": "johndoe@example.com" } }` usamos `payer.email`.\
+
+* **name**: Nome do atributo que será exibido para o usuário.\
+
+* **description**:`(opcional)` Descrição mais detalhada do que este atributo significa.\
+
 * **field\_type**: Indica o tipo do atributo para que a Pluga possa fazer algumas conversões, quando necessário. Os valores possíveis são `string`, `integer`, `decimal` e `datetime`.
 
 {% hint style="warning" %}
@@ -466,13 +490,13 @@ Quando um usuário estiver configurando uma automatização com o seu trigger, d
 
 ![Atributos na esquerda e valores de exemplo na direita](.gitbook/assets/image.png)
 
- Para que esses dados sejam disponibilizados aos usuários você precisará configurar a função `sample` no arquivo `index.js` do seu trigger.
+&#x20;Para que esses dados sejam disponibilizados aos usuários você precisará configurar a função `sample` no arquivo `index.js` do seu trigger.
 
 No  [Woocommerce](https://pluga.co/ferramentas/woocommerce/integracao/) por exemplo, o método `sample` do trigger de **pedido concluído** foi configurado para buscar o último pedido concluído  e completar os exemplos dos atributos com os dados desse pedido.
 
 {% tabs %}
 {% tab title="Sample" %}
-{% code title="lib/triggers/completed\_orders/index.js" %}
+{% code title="lib/triggers/completed_orders/index.js" %}
 ```javascript
 // ...
 
@@ -503,4 +527,3 @@ O formato dos dados de exemplo precisa estar no mesmo formato dos dados enviados
 
 Para usar essa função, é necessário configurar o arquivo `meta.js`do seu trigger com  `trigger_sample_data: true`
 {% endhint %}
-
