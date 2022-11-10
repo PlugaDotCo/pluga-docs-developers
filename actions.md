@@ -127,7 +127,7 @@ Vamos passar campo a campo para entender os seus significados e seus possíveis 
               * **helper\_method**: Identificador do helper method que será usado para gerar a lista de opções para o tipo `remote`. Você pode entender melhor esse assunto na seção [Helper methods](helper-methods.md).\
 
       * **data\_type**: Indica o tipo do atributo para que a Pluga possa fazer algumas conversões, quando necessário. Os valores possíveis são `string`, `integer`, `decimal`, `datetime` e `boolean`.
-      * **date\_format**: Indica qual é o formato de data esperado, no caso o tipo definido no atributo `data_type` receba o valor `datetime`. Por exemplo: `"%Y-%m-%d"`, `"%Y-%m-%dT%H:%M:%S"`.\
+      * **date\_format**: Indica qual é o formato de data esperado, caso o tipo definido no atributo `data_type` receba o valor `datetime`. Por exemplo: `"%Y-%m-%d"`, `"%Y-%m-%dT%H:%M:%S"`.\
       * **dropdown\_multiple**: ** `true` ** quando o campo em questão é do tipo `dropdown` e permite escolher múltiplas opções. Nesses casos sua API receberá um array com os valores (`value`) declarados em `dropdown.list.data`.
       * **custom: `true`** utilizado para indicar que o campo é um _Campo Customizado_.
 *   **action\_custom\_fields**: **`true`** quando a action possui o método `custom_fields` no `index.js` para retornar os campos customizados da action. O método `custom_fields` está detalhado em [Listar campos customizados](triggers.md#listar-campos-customizados).
